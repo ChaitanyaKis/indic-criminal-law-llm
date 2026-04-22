@@ -1,0 +1,642 @@
+# IPC ↔ BNS Section Mapping
+#
+# Seed data for the IPC → BNS (Bharatiya Nyaya Sanhita, 2023) section mapping,
+# effective for offences committed on/after 1 July 2024.
+#
+# Source of truth: MHA comparative table published with the BNS / BNSS / BSA
+# Bills (2023) and the PRS India side-by-side comparison. Individual entries
+# with sub-section-level precision flagged as needs_verification: true are
+# best-available guesses pending a per-section cross-check against the
+# enacted BNS text.
+#
+# Coverage target (Week 2): ~50 headline sections across the high-traffic
+# chapters of the IPC (life, body, sexual offences, property, public
+# tranquillity, conspiracy, intimidation, marriage/dowry). Amendments,
+# ancillary statutes, and BNSS/BSA mappings live in separate files.
+#
+# Relationship vocabulary:
+#   one_to_one    - single IPC section maps to a single BNS section (or sub-section)
+#   one_to_many   - single IPC section split across several BNS sections
+#   many_to_one   - several IPC sections consolidated into one BNS section
+#   removed       - IPC section has no BNS counterpart (repealed/decriminalised)
+#   new_in_bns    - BNS provision with no direct IPC ancestor (ipc_section is null)
+
+version: "0.1"
+source: "MHA Comparative Table (BNS Bill 2023); PRS India BNS/BNSS/BSA comparison (2023)"
+last_verified: "2026-04-22"
+
+mappings:
+
+  # -------------------------------------------------------------------------
+  # Murder & homicide (IPC Chapter XVI → BNS Chapter VI "Offences affecting
+  # the human body", Part A "Offences affecting life")
+  # -------------------------------------------------------------------------
+
+  - ipc: "299"
+    bns: ["100"]
+    relationship: one_to_one
+    subject: "Culpable homicide"
+    ipc_title: "Culpable homicide"
+    bns_title: "Culpable homicide"
+    notes: "Definitional section; substantive language preserved."
+
+  - ipc: "300"
+    bns: ["101"]
+    relationship: one_to_one
+    subject: "Murder"
+    ipc_title: "Murder"
+    bns_title: "Murder"
+    notes: "Definition with five exceptions carried over; exception numbering unchanged in substance."
+
+  - ipc: "302"
+    bns: ["103(1)"]
+    relationship: one_to_one
+    subject: "Murder"
+    ipc_title: "Punishment for murder"
+    bns_title: "Punishment for murder"
+    notes: "BNS 103(2) adds a new mob-lynching sub-offence within the same section."
+
+  - ipc: "303"
+    bns: ["104"]
+    relationship: one_to_one
+    subject: "Murder by life-convict"
+    ipc_title: "Punishment for murder by life-convict"
+    bns_title: "Punishment for murder by life-convict"
+    notes: "IPC 303 was struck down in Mithu v State of Punjab (1983); BNS 104 re-enacts with judicially-informed sentencing (life or death, not mandatory death)."
+
+  - ipc: "304"
+    bns: ["105"]
+    relationship: one_to_one
+    subject: "Culpable homicide not amounting to murder"
+    ipc_title: "Punishment for culpable homicide not amounting to murder"
+    bns_title: "Punishment for culpable homicide not amounting to murder"
+    notes: "IPC 304 Part I (intent) and Part II (knowledge) distinction preserved within the body of BNS 105. Minimum sentence for the intent limb raised to 5 years."
+
+  - ipc: "304A"
+    bns: ["106(1)"]
+    relationship: one_to_one
+    subject: "Death by negligence"
+    ipc_title: "Causing death by negligence"
+    bns_title: "Causing death by negligence"
+    notes: "BNS 106(2) adds a distinct, harsher hit-and-run offence (fleeing without reporting to police/magistrate) with up to 10 years — no IPC ancestor."
+
+  - ipc: "304B"
+    bns: ["80"]
+    relationship: one_to_one
+    subject: "Dowry death"
+    ipc_title: "Dowry death"
+    bns_title: "Dowry death"
+    notes: "Placed in the BNS chapter on offences against women and children, not with homicide."
+
+  - ipc: "305"
+    bns: ["107"]
+    relationship: one_to_one
+    subject: "Abetment of suicide of child or insane person"
+    ipc_title: "Abetment of suicide of child or insane person"
+    bns_title: "Abetment of suicide of child or person of unsound mind"
+    notes: null
+
+  - ipc: "306"
+    bns: ["108"]
+    relationship: one_to_one
+    subject: "Abetment of suicide"
+    ipc_title: "Abetment of suicide"
+    bns_title: "Abetment of suicide"
+    notes: null
+
+  - ipc: "307"
+    bns: ["109"]
+    relationship: one_to_one
+    subject: "Attempt to murder"
+    ipc_title: "Attempt to murder"
+    bns_title: "Attempt to murder"
+    notes: null
+
+  - ipc: "308"
+    bns: ["110"]
+    relationship: one_to_one
+    subject: "Attempt to culpable homicide"
+    ipc_title: "Attempt to commit culpable homicide"
+    bns_title: "Attempt to commit culpable homicide"
+    notes: null
+
+  - ipc: "309"
+    bns: []
+    relationship: removed
+    subject: "Attempt to suicide"
+    ipc_title: "Attempt to commit suicide"
+    bns_title: null
+    notes: "Effectively decriminalised by s.115 Mental Healthcare Act 2017 (presumption of severe stress). BNS does not re-enact a general attempt-to-suicide offence. BNS 226 creates a narrower, distinct offence — attempt to commit suicide to compel or restrain exercise of lawful power by a public servant — which is not the IPC 309 analogue. De facto decriminalized by Section 115, Mental Healthcare Act 2017. BNS 226 covers attempt to commit suicide to compel or restrain a public servant — a distinct and narrower offence, not an analogue of IPC 309."
+
+  # -------------------------------------------------------------------------
+  # Hurt & assault (IPC Chapter XVI → BNS Chapter VI Part B/C)
+  # -------------------------------------------------------------------------
+
+  - ipc: "319"
+    bns: ["114"]
+    relationship: one_to_one
+    subject: "Hurt"
+    ipc_title: "Hurt"
+    bns_title: "Hurt"
+    notes: "Definitional."
+
+  - ipc: "320"
+    bns: ["116"]
+    relationship: one_to_one
+    subject: "Grievous hurt"
+    ipc_title: "Grievous hurt"
+    bns_title: "Grievous hurt"
+    notes: "Definitional."
+
+  - ipc: "323"
+    bns: ["115(2)"]
+    relationship: one_to_one
+    subject: "Voluntarily causing hurt"
+    ipc_title: "Punishment for voluntarily causing hurt"
+    bns_title: "Punishment for voluntarily causing hurt"
+    notes: "BNS 115(1) mirrors IPC 321 (voluntarily causing hurt definition); 115(2) carries IPC 323's punishment."
+    needs_verification: true
+
+  - ipc: "324"
+    bns: ["118(1)"]
+    relationship: one_to_one
+    subject: "Hurt by dangerous weapons or means"
+    ipc_title: "Voluntarily causing hurt by dangerous weapons or means"
+    bns_title: "Voluntarily causing hurt or grievous hurt by dangerous weapons or means"
+    notes: "IPC 324 was made non-compoundable by BNS; 324/326 consolidated into a single dangerous-weapons section (BNS 118) with hurt/grievous-hurt limbs."
+    needs_verification: true
+
+  - ipc: "325"
+    bns: ["117(2)"]
+    relationship: one_to_one
+    subject: "Voluntarily causing grievous hurt"
+    ipc_title: "Punishment for voluntarily causing grievous hurt"
+    bns_title: "Punishment for voluntarily causing grievous hurt"
+    notes: "BNS 117 consolidates voluntarily causing grievous hurt; sub-section precision pending a line-by-line verification."
+    needs_verification: true
+
+  - ipc: "326"
+    bns: ["118(2)"]
+    relationship: one_to_one
+    subject: "Grievous hurt by dangerous weapons"
+    ipc_title: "Voluntarily causing grievous hurt by dangerous weapons or means"
+    bns_title: "Voluntarily causing hurt or grievous hurt by dangerous weapons or means"
+    notes: "Paired with IPC 324 under BNS 118 (dangerous-weapons consolidation)."
+    needs_verification: true
+
+  - ipc: "326A"
+    bns: ["124(1)"]
+    relationship: one_to_one
+    subject: "Acid attack"
+    ipc_title: "Voluntarily causing grievous hurt by use of acid"
+    bns_title: "Voluntarily causing grievous hurt by use of acid"
+    notes: null
+
+  - ipc: "326B"
+    bns: ["124(2)"]
+    relationship: one_to_one
+    subject: "Attempted acid attack"
+    ipc_title: "Voluntarily throwing or attempting to throw acid"
+    bns_title: "Voluntarily throwing or attempting to throw acid"
+    notes: null
+
+  - ipc: "341"
+    bns: ["126(2)"]
+    relationship: one_to_one
+    subject: "Wrongful restraint"
+    ipc_title: "Punishment for wrongful restraint"
+    bns_title: "Punishment for wrongful restraint"
+    notes: "BNS 126(1) defines wrongful restraint (IPC 339); 126(2) is the punishment clause (IPC 341)."
+
+  - ipc: "342"
+    bns: ["127(2)"]
+    relationship: one_to_one
+    subject: "Wrongful confinement"
+    ipc_title: "Punishment for wrongful confinement"
+    bns_title: "Punishment for wrongful confinement"
+    notes: "Mirrors the wrongful-restraint pattern: BNS 127(1) defines, 127(2) punishes."
+
+  - ipc: "351"
+    bns: ["130"]
+    relationship: one_to_one
+    subject: "Assault"
+    ipc_title: "Assault"
+    bns_title: "Assault"
+    notes: "Definitional section."
+    needs_verification: true
+
+  - ipc: "354"
+    bns: ["74"]
+    relationship: one_to_one
+    subject: "Outraging modesty of a woman"
+    ipc_title: "Assault or criminal force to woman with intent to outrage her modesty"
+    bns_title: "Assault or criminal force to woman with intent to outrage her modesty"
+    notes: "Moved from the hurt chapter to the BNS chapter on offences against women (Ch V)."
+
+  - ipc: "354A"
+    bns: ["75"]
+    relationship: one_to_one
+    subject: "Sexual harassment"
+    ipc_title: "Sexual harassment and punishment for sexual harassment"
+    bns_title: "Sexual harassment"
+    notes: null
+
+  - ipc: "354B"
+    bns: ["76"]
+    relationship: one_to_one
+    subject: "Assault with intent to disrobe"
+    ipc_title: "Assault or use of criminal force to woman with intent to disrobe"
+    bns_title: "Assault or use of criminal force to woman with intent to disrobe"
+    notes: null
+
+  - ipc: "354C"
+    bns: ["77"]
+    relationship: one_to_one
+    subject: "Voyeurism"
+    ipc_title: "Voyeurism"
+    bns_title: "Voyeurism"
+    notes: null
+
+  - ipc: "354D"
+    bns: ["78"]
+    relationship: one_to_one
+    subject: "Stalking"
+    ipc_title: "Stalking"
+    bns_title: "Stalking"
+    notes: null
+
+  # -------------------------------------------------------------------------
+  # Sexual offences (IPC Chapter XVI, sections 375-377 → BNS Chapter V)
+  # -------------------------------------------------------------------------
+
+  - ipc: "375"
+    bns: ["63"]
+    relationship: one_to_one
+    subject: "Rape"
+    ipc_title: "Rape"
+    bns_title: "Rape"
+    notes: "Definition carried over; rape remains defined only where the victim is a woman. Consent age of marital-rape exception raised to 18 (post-Independent Thought, 2017 alignment)."
+
+  - ipc: "376"
+    bns: ["64"]
+    relationship: one_to_one
+    subject: "Rape"
+    ipc_title: "Punishment for rape"
+    bns_title: "Punishment for rape"
+    notes: "Minimum sentence for rape raised to 10 years (from 7) in BNS 64."
+
+  - ipc: "376A"
+    bns: ["66"]
+    relationship: one_to_one
+    subject: "Rape causing death or persistent vegetative state"
+    ipc_title: "Punishment for causing death or resulting in persistent vegetative state"
+    bns_title: "Punishment for causing death or resulting in persistent vegetative state of victim"
+    notes: null
+
+  - ipc: "376B"
+    bns: ["67"]
+    relationship: one_to_one
+    subject: "Intercourse by husband upon wife during separation"
+    ipc_title: "Sexual intercourse by husband upon his wife during separation"
+    bns_title: "Sexual intercourse by husband upon his wife during separation"
+    notes: null
+    needs_verification: true
+
+  - ipc: "376C"
+    bns: ["68"]
+    relationship: one_to_one
+    subject: "Intercourse by person in authority"
+    ipc_title: "Sexual intercourse by person in authority"
+    bns_title: "Sexual intercourse by person in authority"
+    notes: null
+    needs_verification: true
+
+  - ipc: "376D"
+    bns: ["70"]
+    relationship: one_to_one
+    subject: "Gang rape"
+    ipc_title: "Gang rape"
+    bns_title: "Gang rape"
+    notes: "BNS 70(2) carries the gang-rape-of-woman-under-18 aggravation from the 2018 IPC amendment."
+
+  - ipc: "376E"
+    bns: ["71"]
+    relationship: one_to_one
+    subject: "Repeat sexual offenders"
+    ipc_title: "Punishment for repeat offenders"
+    bns_title: "Punishment for repeat offenders"
+    notes: null
+
+  - ipc: "377"
+    bns: []
+    relationship: removed
+    subject: "Unnatural offences"
+    ipc_title: "Unnatural offences"
+    bns_title: null
+    notes: "Consensual same-sex acts decriminalized by Navtej Singh Johar v. Union of India (2018) 10 SCC 1. Non-consensual acts against men, transgender persons, and bestiality have no direct BNS re-enactment; legal scholars have flagged this as a coverage gap. BNS 63 (rape) retains gender-specific framing. Awaiting legislative amendment or judicial guidance. Do not force a mapping."
+    needs_verification: true
+
+  # -------------------------------------------------------------------------
+  # Theft, robbery, dacoity (IPC Chapter XVII → BNS Chapter XVII)
+  # -------------------------------------------------------------------------
+
+  - ipc: "378"
+    bns: ["303(1)"]
+    relationship: one_to_one
+    subject: "Theft"
+    ipc_title: "Theft"
+    bns_title: "Theft"
+    notes: "Definitional."
+
+  - ipc: "379"
+    bns: ["303(2)"]
+    relationship: one_to_one
+    subject: "Theft"
+    ipc_title: "Punishment for theft"
+    bns_title: "Punishment for theft"
+    notes: "BNS 303(2) adds a new aggravated form for repeat snatching/theft (not in IPC 379)."
+
+  - ipc: "380"
+    bns: ["305"]
+    relationship: many_to_one
+    subject: "Theft in dwelling house / vehicle / place of worship"
+    ipc_title: "Theft in dwelling house, etc."
+    bns_title: "Theft in dwelling house, or means of transportation or place of worship, etc."
+    notes: "BNS 305 consolidates IPC 380/381/382 and expands the aggravated list to include means of transportation and place of worship."
+    needs_verification: true
+
+  - ipc: "390"
+    bns: ["309(1)"]
+    relationship: one_to_one
+    subject: "Robbery"
+    ipc_title: "Robbery"
+    bns_title: "Robbery"
+    notes: "Definitional. BNS 309 consolidates definition and punishment in one section."
+    needs_verification: true
+
+  - ipc: "391"
+    bns: ["310(1)"]
+    relationship: one_to_one
+    subject: "Dacoity"
+    ipc_title: "Dacoity"
+    bns_title: "Dacoity"
+    notes: "Definitional (five or more persons)."
+    needs_verification: true
+
+  - ipc: "392"
+    bns: ["309(4)"]
+    relationship: one_to_one
+    subject: "Robbery"
+    ipc_title: "Punishment for robbery"
+    bns_title: "Punishment for robbery"
+    notes: null
+    needs_verification: true
+
+  - ipc: "395"
+    bns: ["310(2)"]
+    relationship: one_to_one
+    subject: "Dacoity"
+    ipc_title: "Punishment for dacoity"
+    bns_title: "Punishment for dacoity"
+    notes: null
+    needs_verification: true
+
+  - ipc: "396"
+    bns: ["310(3)"]
+    relationship: one_to_one
+    subject: "Dacoity with murder"
+    ipc_title: "Dacoity with murder"
+    bns_title: "Dacoity with murder"
+    notes: null
+    needs_verification: true
+
+  - ipc: "405"
+    bns: ["316(1)"]
+    relationship: one_to_one
+    subject: "Criminal breach of trust"
+    ipc_title: "Criminal breach of trust"
+    bns_title: "Criminal breach of trust"
+    notes: "Definitional."
+
+  - ipc: "406"
+    bns: ["316(2)"]
+    relationship: one_to_one
+    subject: "Criminal breach of trust"
+    ipc_title: "Punishment for criminal breach of trust"
+    bns_title: "Punishment for criminal breach of trust"
+    notes: "Maximum sentence raised from 3 to 5 years in BNS 316(2)."
+
+  - ipc: "409"
+    bns: ["316(5)"]
+    relationship: one_to_one
+    subject: "Criminal breach of trust by public servant / banker"
+    ipc_title: "Criminal breach of trust by public servant, or by banker, merchant or agent"
+    bns_title: "Criminal breach of trust by public servant, or by banker, merchant or agent"
+    notes: null
+    needs_verification: true
+
+  - ipc: "415"
+    bns: ["318(1)"]
+    relationship: one_to_one
+    subject: "Cheating"
+    ipc_title: "Cheating"
+    bns_title: "Cheating"
+    notes: "Definitional."
+
+  - ipc: "420"
+    bns: ["318(4)"]
+    relationship: one_to_one
+    subject: "Cheating and dishonestly inducing delivery"
+    ipc_title: "Cheating and dishonestly inducing delivery of property"
+    bns_title: "Cheating and dishonestly inducing delivery of property"
+    notes: "Maximum sentence (7 years) preserved. Sub-section index pending verification."
+    needs_verification: true
+
+  # -------------------------------------------------------------------------
+  # Criminal intimidation, insult, defamation (IPC Chapter XXI-XXII → BNS Ch XIX-XX)
+  # -------------------------------------------------------------------------
+
+  - ipc: "499"
+    bns: ["356(1)"]
+    relationship: one_to_one
+    subject: "Defamation"
+    ipc_title: "Defamation"
+    bns_title: "Defamation"
+    notes: "Definition with ten exceptions carried over verbatim."
+
+  - ipc: "500"
+    bns: ["356(2)"]
+    relationship: one_to_one
+    subject: "Defamation"
+    ipc_title: "Punishment for defamation"
+    bns_title: "Punishment for defamation"
+    notes: "BNS 356 adds community-service as an alternative punishment — a new sentencing option."
+
+  - ipc: "503"
+    bns: ["351(1)"]
+    relationship: one_to_one
+    subject: "Criminal intimidation"
+    ipc_title: "Criminal intimidation"
+    bns_title: "Criminal intimidation"
+    notes: "Definitional."
+
+  - ipc: "506"
+    bns: ["351(2)", "351(3)"]
+    relationship: one_to_many
+    subject: "Criminal intimidation"
+    ipc_title: "Punishment for criminal intimidation"
+    bns_title: "Punishment for criminal intimidation"
+    notes: "IPC 506 had two parts (ordinary and aggravated — death/grievous hurt/property destruction threats); BNS 351 carries this as sub-sections (2) and (3)."
+    needs_verification: true
+
+  - ipc: "509"
+    bns: ["79"]
+    relationship: one_to_one
+    subject: "Insulting modesty of a woman"
+    ipc_title: "Word, gesture or act intended to insult the modesty of a woman"
+    bns_title: "Word, gesture or act intended to insult the modesty of a woman"
+    notes: "Moved to BNS chapter on offences against women."
+
+  # -------------------------------------------------------------------------
+  # Marriage, bigamy, dowry (IPC Chapter XX → BNS Chapter V offences-against-women)
+  # -------------------------------------------------------------------------
+
+  - ipc: "494"
+    bns: ["82(1)"]
+    relationship: one_to_one
+    subject: "Bigamy"
+    ipc_title: "Marrying again during lifetime of husband or wife"
+    bns_title: "Marrying again during lifetime of husband or wife"
+    notes: null
+    needs_verification: true
+
+  - ipc: "495"
+    bns: ["82(2)"]
+    relationship: one_to_one
+    subject: "Bigamy with concealment"
+    ipc_title: "Same offence with concealment of former marriage"
+    bns_title: "Same offence with concealment of former marriage"
+    notes: null
+    needs_verification: true
+
+  - ipc: "498A"
+    bns: ["85", "86"]
+    relationship: one_to_many
+    subject: "Cruelty by husband or his relatives"
+    ipc_title: "Husband or relative of husband of a woman subjecting her to cruelty"
+    bns_title: "Husband or relative of husband of a woman subjecting her to cruelty / Cruelty defined"
+    notes: "BNS 85 carries the punishment clause; BNS 86 carries the definition of 'cruelty' (formerly the explanation to IPC 498A). This is the flagship split cited in the Bill's Comparative Table."
+
+  # -------------------------------------------------------------------------
+  # Public order: unlawful assembly, rioting, enmity (IPC Ch VIII → BNS Ch XI)
+  # -------------------------------------------------------------------------
+
+  - ipc: "141"
+    bns: ["189(1)"]
+    relationship: one_to_one
+    subject: "Unlawful assembly"
+    ipc_title: "Unlawful assembly"
+    bns_title: "Unlawful assembly"
+    notes: "Definitional."
+    needs_verification: true
+
+  - ipc: "143"
+    bns: ["189(2)"]
+    relationship: one_to_one
+    subject: "Unlawful assembly"
+    ipc_title: "Punishment for being member of unlawful assembly"
+    bns_title: "Punishment for being member of unlawful assembly"
+    notes: null
+    needs_verification: true
+
+  - ipc: "144"
+    bns: ["189(4)"]
+    relationship: one_to_one
+    subject: "Unlawful assembly armed with deadly weapon"
+    ipc_title: "Joining unlawful assembly armed with deadly weapon"
+    bns_title: "Joining unlawful assembly armed with deadly weapon"
+    notes: null
+    needs_verification: true
+
+  - ipc: "146"
+    bns: ["191(1)"]
+    relationship: one_to_one
+    subject: "Rioting"
+    ipc_title: "Rioting"
+    bns_title: "Rioting"
+    notes: "Definitional."
+    needs_verification: true
+
+  - ipc: "147"
+    bns: ["191(2)"]
+    relationship: one_to_one
+    subject: "Rioting"
+    ipc_title: "Punishment for rioting"
+    bns_title: "Punishment for rioting"
+    notes: null
+    needs_verification: true
+
+  - ipc: "149"
+    bns: ["190"]
+    relationship: one_to_one
+    subject: "Common object — vicarious liability in unlawful assembly"
+    ipc_title: "Every member of unlawful assembly guilty of offence committed in prosecution of common object"
+    bns_title: "Every member of unlawful assembly guilty of offence committed in prosecution of common object"
+    notes: null
+
+  - ipc: "153A"
+    bns: ["196"]
+    relationship: one_to_one
+    subject: "Promoting enmity between groups"
+    ipc_title: "Promoting enmity between different groups on grounds of religion, race, place of birth, residence, language, etc."
+    bns_title: "Promoting enmity between different groups on grounds of religion, race, place of birth, residence, language, etc."
+    notes: null
+
+  # -------------------------------------------------------------------------
+  # Criminal conspiracy (IPC Ch V-A → BNS Ch IV)
+  # -------------------------------------------------------------------------
+
+  - ipc: "120A"
+    bns: ["61(1)"]
+    relationship: one_to_one
+    subject: "Criminal conspiracy"
+    ipc_title: "Definition of criminal conspiracy"
+    bns_title: "Criminal conspiracy"
+    notes: "Definitional."
+
+  - ipc: "120B"
+    bns: ["61(2)"]
+    relationship: one_to_one
+    subject: "Criminal conspiracy"
+    ipc_title: "Punishment of criminal conspiracy"
+    bns_title: "Punishment of criminal conspiracy"
+    notes: null
+
+  # -------------------------------------------------------------------------
+  # New in BNS — offences with no direct IPC ancestor
+  # -------------------------------------------------------------------------
+
+  - ipc: null
+    bns: ["111"]
+    relationship: new_in_bns
+    subject: "Organised crime"
+    ipc_title: null
+    bns_title: "Organised crime"
+    notes: "Continuing unlawful activity by a crime syndicate (including extortion, cyber-crime syndicates, human trafficking, contract killing). Previously covered only by state-level MCOCA/KCOCA-style legislation; now a central offence."
+
+  - ipc: null
+    bns: ["113"]
+    relationship: new_in_bns
+    subject: "Terrorist act"
+    ipc_title: null
+    bns_title: "Terrorist act"
+    notes: "Added to general criminal code; substantially mirrors UAPA s.15 definitions. Concurrent prosecution under UAPA remains possible — prosecuting agency chooses the head."
+
+  - ipc: null
+    bns: ["103(2)"]
+    relationship: new_in_bns
+    subject: "Mob lynching"
+    ipc_title: null
+    bns_title: "Murder by a group on grounds of race, caste, sex, language, etc."
+    notes: "Explicit mob-lynching sub-offence: where five or more persons acting in concert murder on grounds of race, caste, community, sex, place of birth, language, personal belief, or any other similar ground. Sub-section index 103(2) to be confirmed against the enacted text."
+    needs_verification: true
