@@ -358,11 +358,11 @@ mappings:
 
   - ipc: "380"
     bns: ["305"]
-    relationship: many_to_one
+    relationship: one_to_one
     subject: "Theft in dwelling house / vehicle / place of worship"
     ipc_title: "Theft in dwelling house, etc."
     bns_title: "Theft in dwelling house, or means of transportation or place of worship, etc."
-    notes: "BNS 305 consolidates IPC 380/381/382 and expands the aggravated list to include means of transportation and place of worship."
+    notes: "BNS 305 retains IPC 380 (theft in dwelling house) with scope expanded to include means of transport and places of worship. Does NOT consolidate 381/382 — those go to BNS 306/307 respectively. (Earlier notes on this entry were inaccurate.)"
     needs_verification: true
 
   - ipc: "390"
@@ -640,3 +640,645 @@ mappings:
     bns_title: "Murder by a group on grounds of race, caste, sex, language, etc."
     notes: "Explicit mob-lynching sub-offence: where five or more persons acting in concert murder on grounds of race, caste, community, sex, place of birth, language, personal belief, or any other similar ground. Sub-section index 103(2) to be confirmed against the enacted text."
     needs_verification: true
+
+  # =========================================================================
+  # BATCH 2 — property offences, forgery, kidnapping (Week 2 expansion)
+  # =========================================================================
+  # Coverage: IPC 381-402, 403-419 (new), 463-474, 489A-E, 359-373.
+  # Every entry below carries a "source" field naming the primary-source
+  # tradition consulted (MHA Comparative Table is the standard reference).
+  # Sub-section precision remains the dominant uncertainty — most entries
+  # correctly identify the main BNS section but need line-by-line check
+  # against the enacted Gazette text for the sub-section index.
+
+  # -------------------------------------------------------------------------
+  # Theft (continuation) — IPC 381, 382 → BNS 306, 307
+  # -------------------------------------------------------------------------
+
+  - ipc: "381"
+    bns: ["306"]
+    relationship: one_to_one
+    subject: "Theft by clerk or servant"
+    ipc_title: "Theft by clerk or servant of property in possession of master"
+    bns_title: "Theft by clerk or servant of property in possession of master"
+    notes: "Direct re-enactment at main-section level; BNS 306 is a dedicated section (not a sub-section of 305). This contradicts the existing IPC 380 entry's note about BNS 305 consolidating 380/381/382 — see verification backlog."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "382"
+    bns: ["307"]
+    relationship: one_to_one
+    subject: "Theft after preparation for causing death or hurt"
+    ipc_title: "Theft after preparation made for causing death or hurt or restraint in order to the committing of the theft"
+    bns_title: "Theft after preparation made for causing death, hurt or restraint in order to the committing of the theft"
+    notes: "BNS 307 is a dedicated section; same inconsistency with the existing IPC 380 note as above."
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Extortion — IPC 383-389 → BNS 308 (consolidated with sub-sections)
+  # -------------------------------------------------------------------------
+
+  - ipc: "383"
+    bns: ["308(1)"]
+    relationship: one_to_one
+    subject: "Extortion"
+    ipc_title: "Extortion"
+    bns_title: "Extortion"
+    notes: "Definitional. BNS 308 consolidates the whole of IPC 383-389 into a single section with sub-sections; each IPC section below maps to a sub-section of 308."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "384"
+    bns: ["308(2)"]
+    relationship: one_to_one
+    subject: "Extortion"
+    ipc_title: "Punishment for extortion"
+    bns_title: "Punishment for extortion"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "385"
+    bns: ["308(3)"]
+    relationship: one_to_one
+    subject: "Putting person in fear of injury to commit extortion"
+    ipc_title: "Putting person in fear of injury in order to commit extortion"
+    bns_title: "Putting person in fear of injury in order to commit extortion"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "386"
+    bns: ["308(4)"]
+    relationship: one_to_one
+    subject: "Extortion by putting in fear of death or grievous hurt"
+    ipc_title: "Extortion by putting a person in fear of death or grievous hurt"
+    bns_title: "Extortion by putting a person in fear of death or grievous hurt"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "387"
+    bns: ["308(5)"]
+    relationship: one_to_one
+    subject: "Putting person in fear of death or grievous hurt to commit extortion"
+    ipc_title: "Putting person in fear of death or of grievous hurt, in order to commit extortion"
+    bns_title: "Putting person in fear of death or of grievous hurt, in order to commit extortion"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "388"
+    bns: ["308(6)"]
+    relationship: one_to_one
+    subject: "Extortion by threat of accusation of offence"
+    ipc_title: "Extortion by threat of accusation of an offence punishable with death or imprisonment for life"
+    bns_title: "Extortion by threat of accusation of an offence punishable with death, imprisonment for life, etc."
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "389"
+    bns: ["308(7)"]
+    relationship: one_to_one
+    subject: "Putting person in fear of accusation to commit extortion"
+    ipc_title: "Putting person in fear of accusation of offence, in order to commit extortion"
+    bns_title: "Putting person in fear of accusation of offence, in order to commit extortion"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Robbery / dacoity (continuation) — IPC 393, 394, 397-402
+  # -------------------------------------------------------------------------
+
+  - ipc: "393"
+    bns: ["309"]
+    relationship: one_to_one
+    subject: "Attempt to commit robbery"
+    ipc_title: "Attempt to commit robbery"
+    bns_title: "Robbery"
+    notes: "BNS 309 consolidates robbery (definition, punishment, and attempt) into one section with sub-sections; the exact sub-section for the attempt limb needs verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "394"
+    bns: ["309"]
+    relationship: one_to_one
+    subject: "Voluntarily causing hurt in committing robbery"
+    ipc_title: "Voluntarily causing hurt in committing robbery"
+    bns_title: "Robbery"
+    notes: "Retained within BNS 309 as the 'hurt-in-robbery' aggravation; sub-section to be confirmed."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "397"
+    bns: ["311"]
+    relationship: one_to_one
+    subject: "Robbery or dacoity with attempt to cause death or grievous hurt"
+    ipc_title: "Robbery or dacoity, with attempt to cause death or grievous hurt"
+    bns_title: "Robbery or dacoity, with attempt to cause death or grievous hurt"
+    notes: "Dedicated BNS section (311), separate from the 309/310 consolidations — mandatory 7-year minimum carried over."
+    source: "MHA Table"
+
+  - ipc: "398"
+    bns: ["312"]
+    relationship: one_to_one
+    subject: "Attempt to commit robbery or dacoity when armed with deadly weapon"
+    ipc_title: "Attempt to commit robbery or dacoity when armed with deadly weapon"
+    bns_title: "Attempt to commit robbery or dacoity when armed with deadly weapon"
+    notes: "Dedicated BNS section (312)."
+    source: "MHA Table"
+
+  - ipc: "399"
+    bns: ["310"]
+    relationship: one_to_one
+    subject: "Preparation to commit dacoity"
+    ipc_title: "Making preparation to commit dacoity"
+    bns_title: "Dacoity"
+    notes: "Subsumed within BNS 310; sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "400"
+    bns: ["310"]
+    relationship: one_to_one
+    subject: "Belonging to a gang of dacoits"
+    ipc_title: "Punishment for belonging to gang of dacoits"
+    bns_title: "Dacoity"
+    notes: "Subsumed within BNS 310; sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "401"
+    bns: ["313"]
+    relationship: one_to_one
+    subject: "Belonging to a gang of thieves"
+    ipc_title: "Punishment for belonging to gang of thieves"
+    bns_title: "Punishment for belonging to gang of thieves"
+    notes: "BNS retains this as a free-standing section (not folded into the dacoity consolidation); exact BNS index 313 to be verified."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "402"
+    bns: ["310"]
+    relationship: one_to_one
+    subject: "Assembling for purpose of committing dacoity"
+    ipc_title: "Assembling for purpose of committing dacoity"
+    bns_title: "Dacoity"
+    notes: "Subsumed within BNS 310; sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Misappropriation — IPC 403, 404 → BNS 314, 315
+  # -------------------------------------------------------------------------
+
+  - ipc: "403"
+    bns: ["314"]
+    relationship: one_to_one
+    subject: "Dishonest misappropriation of property"
+    ipc_title: "Dishonest misappropriation of property"
+    bns_title: "Dishonest misappropriation of property"
+    notes: "Carried over substantially unchanged."
+    source: "MHA Table"
+
+  - ipc: "404"
+    bns: ["315"]
+    relationship: one_to_one
+    subject: "Misappropriation of property possessed by deceased"
+    ipc_title: "Dishonest misappropriation of property possessed by deceased person at the time of his death"
+    bns_title: "Dishonest misappropriation of property possessed by deceased person at the time of his death"
+    notes: null
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Criminal breach of trust (continuation) — IPC 407, 408 → BNS 316(3), 316(4)
+  # -------------------------------------------------------------------------
+
+  - ipc: "407"
+    bns: ["316(3)"]
+    relationship: one_to_one
+    subject: "Criminal breach of trust by carrier or wharfinger"
+    ipc_title: "Criminal breach of trust by carrier, etc."
+    bns_title: "Criminal breach of trust by carrier, etc."
+    notes: "Within BNS 316's sub-section structure; exact sub-section index to be verified."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "408"
+    bns: ["316(4)"]
+    relationship: one_to_one
+    subject: "Criminal breach of trust by clerk or servant"
+    ipc_title: "Criminal breach of trust by clerk or servant"
+    bns_title: "Criminal breach of trust by clerk or servant"
+    notes: "Within BNS 316's sub-section structure; exact sub-section index to be verified."
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Cheating (continuation) — IPC 416-419
+  # -------------------------------------------------------------------------
+
+  - ipc: "416"
+    bns: ["319(1)"]
+    relationship: one_to_one
+    subject: "Cheating by personation"
+    ipc_title: "Cheating by personation"
+    bns_title: "Cheating by personation"
+    notes: "BNS 319 is the dedicated personation section; sub-section precision (definitional vs punishment split) to be verified. BNS also introduces a new digital-impersonation offence adjacent to 319."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "417"
+    bns: ["318(2)"]
+    relationship: one_to_one
+    subject: "Cheating (basic punishment)"
+    ipc_title: "Punishment for cheating"
+    bns_title: "Cheating"
+    notes: "Basic cheating punishment within BNS 318's sub-section structure (matching 415→318(1) definition, 420→318(4) inducement-of-delivery)."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "418"
+    bns: ["318(3)"]
+    relationship: one_to_one
+    subject: "Cheating with knowledge wrongful loss may ensue"
+    ipc_title: "Cheating with knowledge that wrongful loss may ensue to person whose interest offender is bound to protect"
+    bns_title: "Cheating"
+    notes: "Within BNS 318; sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "419"
+    bns: ["319(2)"]
+    relationship: one_to_one
+    subject: "Punishment for cheating by personation"
+    ipc_title: "Punishment for cheating by personation"
+    bns_title: "Cheating by personation"
+    notes: "Punishment limb of BNS 319 (personation); sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Forgery — IPC 463-474 → BNS 335-341 (restructured, not 1:1)
+  # -------------------------------------------------------------------------
+
+  - ipc: "463"
+    bns: ["336"]
+    relationship: one_to_one
+    subject: "Forgery"
+    ipc_title: "Forgery"
+    bns_title: "Forgery"
+    notes: "Definitional. BNS 336 is the forgery section; definition carried over."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "464"
+    bns: ["335"]
+    relationship: one_to_one
+    subject: "Making a false document"
+    ipc_title: "Making a false document"
+    bns_title: "Making a false document or false electronic record"
+    notes: "BNS 335 expands 'false document' explicitly to 'false electronic record' — a structural rather than definitional change."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "465"
+    bns: ["336(2)"]
+    relationship: one_to_one
+    subject: "Forgery (basic punishment)"
+    ipc_title: "Punishment for forgery"
+    bns_title: "Forgery"
+    notes: "Punishment clause within BNS 336; sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "466"
+    bns: ["337"]
+    relationship: one_to_one
+    subject: "Forgery of court or public record"
+    ipc_title: "Forgery of record of Court or of public register, etc."
+    bns_title: "Forgery of record of Court or of public register, etc."
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "467"
+    bns: ["338"]
+    relationship: one_to_one
+    subject: "Forgery of valuable security or will"
+    ipc_title: "Forgery of valuable security, will, etc."
+    bns_title: "Forgery of valuable security, will, etc."
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "468"
+    bns: ["336(3)"]
+    relationship: one_to_one
+    subject: "Forgery for purpose of cheating"
+    ipc_title: "Forgery for purpose of cheating"
+    bns_title: "Forgery"
+    notes: "Aggravated forgery limb within BNS 336 (for-cheating variant); sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "469"
+    bns: ["336(4)"]
+    relationship: one_to_one
+    subject: "Forgery for purpose of harming reputation"
+    ipc_title: "Forgery for purpose of harming reputation"
+    bns_title: "Forgery"
+    notes: "Aggravated forgery limb within BNS 336 (reputation-harm variant); sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "471"
+    bns: ["340"]
+    relationship: one_to_one
+    subject: "Using as genuine a forged document"
+    ipc_title: "Using as genuine a forged document or electronic record"
+    bns_title: "Forged document or electronic record"
+    notes: "BNS 340 (using as genuine) is the main analogue; sub-section structure within 340 to be confirmed."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "472"
+    bns: ["341"]
+    relationship: one_to_one
+    subject: "Making or possessing counterfeit seal"
+    ipc_title: "Making or possessing counterfeit seal, etc., with intent to commit forgery punishable under section 467"
+    bns_title: "Making or possessing counterfeit seal, etc., with intent to commit forgery"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "474"
+    bns: ["339"]
+    relationship: one_to_one
+    subject: "Possession of forged document with intent to use as genuine"
+    ipc_title: "Having possession of document described in section 466 or 467, knowing it to be forged and intending to use it as genuine"
+    bns_title: "Having possession of document described in section 337 or 338, knowing it to be forged and intending to use it as genuine"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Counterfeit currency — IPC 489A-E → BNS 178-182
+  # -------------------------------------------------------------------------
+
+  - ipc: "489A"
+    bns: ["178"]
+    relationship: one_to_one
+    subject: "Counterfeiting currency or bank notes"
+    ipc_title: "Counterfeiting currency-notes or bank-notes"
+    bns_title: "Counterfeiting currency-notes or bank-notes"
+    notes: "Main-section mapping confident; BNS Chapter XI covers counterfeit-currency offences as 178-182."
+    source: "MHA Table"
+
+  - ipc: "489B"
+    bns: ["179"]
+    relationship: one_to_one
+    subject: "Using as genuine counterfeit currency notes"
+    ipc_title: "Using as genuine, forged or counterfeit currency-notes or bank-notes"
+    bns_title: "Using as genuine, forged or counterfeit currency-notes or bank-notes"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "489C"
+    bns: ["180"]
+    relationship: one_to_one
+    subject: "Possession of counterfeit currency notes"
+    ipc_title: "Possession of forged or counterfeit currency-notes or bank-notes"
+    bns_title: "Possession of forged or counterfeit currency-notes or bank-notes"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "489D"
+    bns: ["181"]
+    relationship: one_to_one
+    subject: "Making or possessing instruments for counterfeiting currency"
+    ipc_title: "Making or possessing instruments or materials for forging or counterfeiting currency-notes or bank-notes"
+    bns_title: "Making or possessing instruments or materials for forging or counterfeiting currency-notes or bank-notes"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "489E"
+    bns: ["182"]
+    relationship: one_to_one
+    subject: "Making or using documents resembling currency notes"
+    ipc_title: "Making or using documents resembling currency-notes or bank-notes"
+    bns_title: "Making or using documents resembling currency-notes or bank-notes"
+    notes: "BNS section index (182) to be confirmed against the Gazette — less established than 489A-D."
+    needs_verification: true
+    source: "MHA Table"
+
+  # -------------------------------------------------------------------------
+  # Kidnapping, abduction, trafficking — IPC 359-373
+  # BNS places these across Chapter V (women & children: 87, 95-99) and
+  # Chapter VI (human body: 137-147). All entries in this block are
+  # flagged needs_verification: true — this is the single most
+  # consolidation-heavy domain in the IPC→BNS transition.
+  # -------------------------------------------------------------------------
+
+  - ipc: "359"
+    bns: ["137"]
+    relationship: many_to_one
+    subject: "Kidnapping"
+    ipc_title: "Kidnapping"
+    bns_title: "Kidnapping"
+    notes: "BNS 137 consolidates the IPC 'two kinds of kidnapping' (from India / from lawful guardianship) plus the punishment clause into a single section. 359 here carries the definitional component."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "360"
+    bns: ["137"]
+    relationship: many_to_one
+    subject: "Kidnapping from India"
+    ipc_title: "Kidnapping from India"
+    bns_title: "Kidnapping"
+    notes: "Consolidated into BNS 137."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "361"
+    bns: ["137"]
+    relationship: many_to_one
+    subject: "Kidnapping from lawful guardianship"
+    ipc_title: "Kidnapping from lawful guardianship"
+    bns_title: "Kidnapping"
+    notes: "Consolidated into BNS 137."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "362"
+    bns: ["138"]
+    relationship: one_to_one
+    subject: "Abduction"
+    ipc_title: "Abduction"
+    bns_title: "Abduction"
+    notes: "Definitional; carried over as a dedicated BNS section."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "363"
+    bns: ["137"]
+    relationship: many_to_one
+    subject: "Punishment for kidnapping"
+    ipc_title: "Punishment for kidnapping"
+    bns_title: "Kidnapping"
+    notes: "Punishment clause consolidated into BNS 137 (same section that carries the definitions)."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "363A"
+    bns: ["139"]
+    relationship: one_to_one
+    subject: "Kidnapping or maiming a minor for begging"
+    ipc_title: "Kidnapping or maiming a minor for purposes of begging"
+    bns_title: "Kidnapping or maiming a child for purposes of begging"
+    notes: "Terminology updated: 'minor' → 'child'. Dedicated BNS section (139)."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "364"
+    bns: ["140"]
+    relationship: many_to_one
+    subject: "Kidnapping or abducting in order to murder"
+    ipc_title: "Kidnapping or abducting in order to murder"
+    bns_title: "Kidnapping or abducting in order to murder or for ransom, etc."
+    notes: "BNS 140 consolidates IPC 364 (murder) and 364A (ransom) — plus the 367 grievous-hurt aggravation."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "364A"
+    bns: ["140"]
+    relationship: many_to_one
+    subject: "Kidnapping for ransom"
+    ipc_title: "Kidnapping for ransom, etc."
+    bns_title: "Kidnapping or abducting in order to murder or for ransom, etc."
+    notes: "Consolidated with IPC 364 into BNS 140. Death-penalty sentencing option carried over."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "365"
+    bns: ["141"]
+    relationship: one_to_one
+    subject: "Kidnapping with intent to wrongfully confine"
+    ipc_title: "Kidnapping or abducting with intent secretly and wrongfully to confine person"
+    bns_title: "Kidnapping or abducting with intent secretly and wrongfully to confine person"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "366"
+    bns: ["87"]
+    relationship: one_to_one
+    subject: "Kidnapping or abducting woman to compel marriage"
+    ipc_title: "Kidnapping, abducting or inducing woman to compel her marriage, etc."
+    bns_title: "Kidnapping, abducting or inducing woman to compel her marriage, etc."
+    notes: "Placed in BNS Chapter V (offences against women), not in the Chapter VI kidnapping block. Aligns with IPC 366's gendered framing."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "366A"
+    bns: ["95"]
+    relationship: one_to_one
+    subject: "Procuration of minor girl"
+    ipc_title: "Procuration of minor girl"
+    bns_title: "Procuration of child"
+    notes: "BNS generalises 'minor girl' to 'child' (gender-neutral) — a material scope expansion. Placed in BNS Chapter V."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "366B"
+    bns: ["96"]
+    relationship: one_to_one
+    subject: "Importation of girl from foreign country"
+    ipc_title: "Importation of girl from foreign country"
+    bns_title: "Importation of girl or boy from foreign country"
+    notes: "BNS expands scope to include boys (and implicitly other gender identities) — noted in PRS commentary."
+    needs_verification: true
+    source: "PRS India"
+
+  - ipc: "367"
+    bns: ["140"]
+    relationship: many_to_one
+    subject: "Kidnapping or abducting to cause grievous hurt, slavery"
+    ipc_title: "Kidnapping or abducting in order to subject person to grievous hurt, slavery, etc."
+    bns_title: "Kidnapping or abducting in order to murder or for ransom, etc."
+    notes: "Merged into BNS 140 along with 364 / 364A. The 'unnatural lust' limb of IPC 367 has no BNS analogue post-Navtej Singh Johar (2018)."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "368"
+    bns: ["142"]
+    relationship: one_to_one
+    subject: "Wrongfully concealing kidnapped person"
+    ipc_title: "Wrongfully concealing or keeping in confinement, kidnapped or abducted person"
+    bns_title: "Wrongfully concealing or keeping in confinement, kidnapped or abducted person"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "369"
+    bns: ["139"]
+    relationship: one_to_one
+    subject: "Kidnapping child under 10 to take property"
+    ipc_title: "Kidnapping or abducting child under ten years with intent to steal from its person"
+    bns_title: "Kidnapping or maiming a child for purposes of begging"
+    notes: "Likely subsumed within BNS 139 (child-focused kidnapping section); mapping pending confirmation — could alternatively land in BNS 141."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "370"
+    bns: ["143"]
+    relationship: many_to_one
+    subject: "Trafficking of person"
+    ipc_title: "Trafficking of person"
+    bns_title: "Trafficking of person"
+    notes: "BNS 143 retains the 2013 Criminal Law Amendment framing. IPC 370 and 370A both map into BNS 143 + 144 with structural changes."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "370A"
+    bns: ["144"]
+    relationship: one_to_one
+    subject: "Exploitation of trafficked person"
+    ipc_title: "Exploitation of a trafficked person"
+    bns_title: "Exploitation of a trafficked child"
+    notes: "BNS narrows the 'trafficked person' focus in 144 specifically to 'trafficked child' in the section heading, while the adult exploitation offence sits inside 143. Worth flagging as a scope change in comparative commentary."
+    needs_verification: true
+    source: "PRS India"
+
+  - ipc: "371"
+    bns: ["145"]
+    relationship: one_to_one
+    subject: "Habitual dealing in slaves"
+    ipc_title: "Habitual dealing in slaves"
+    bns_title: "Habitual dealing in slaves"
+    notes: null
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "372"
+    bns: ["98"]
+    relationship: one_to_one
+    subject: "Selling child for purposes of prostitution"
+    ipc_title: "Selling minor for purposes of prostitution, etc."
+    bns_title: "Selling child for purposes of prostitution, etc."
+    notes: "Placed in BNS Chapter V (women & children). Terminology: 'minor' → 'child'."
+    needs_verification: true
+    source: "MHA Table"
+
+  - ipc: "373"
+    bns: ["99"]
+    relationship: one_to_one
+    subject: "Buying child for purposes of prostitution"
+    ipc_title: "Buying minor for purposes of prostitution, etc."
+    bns_title: "Buying child for purposes of prostitution, etc."
+    notes: "Placed in BNS Chapter V (women & children). Terminology: 'minor' → 'child'."
+    needs_verification: true
+    source: "MHA Table"

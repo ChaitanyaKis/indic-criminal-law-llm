@@ -253,11 +253,14 @@ def test_one_to_many_relationship_example():
 
 
 def test_many_to_one_relationship_example():
-    # IPC 380 is labelled many_to_one because BNS 305 consolidates
-    # IPC 380/381/382 — even though only 380 is in our seed.
-    m = map_ipc_to_bns("380")
-    assert m is not None
-    assert m.relationship == "many_to_one"
+    # Kidnapping consolidation: IPC 359, 360, 361, 363 all collapse
+    # into BNS 137, so each of those IPC entries is many_to_one.
+    # (The previous example — IPC 380 → BNS 305 — was wrong; 305
+    # only absorbs 380, not 381/382. See 380 regression test.)
+    for ipc in ("359", "360", "361", "363"):
+        m = map_ipc_to_bns(ipc)
+        assert m is not None
+        assert m.relationship == "many_to_one", f"{ipc} rel={m.relationship}"
 
 
 def test_removed_relationship_example():
@@ -292,3 +295,85 @@ def test_stats_returns_sane_numbers():
 def test_stats_sum_of_relationships_equals_total():
     s = stats()
     assert sum(s["by_relationship"].values()) == s["total_entries"]
+
+
+# ---- Batch 2 spot-check round-trips (5 new entries) --------------------
+
+
+def test_batch2_extortion_383_round_trip():
+    # IPC 383 (extortion def) → BNS 308(1); and subject search "Extortion"
+    # should return at least 383, 384, 385.
+    m = map_ipc_to_bns("383")
+    assert m is not None
+    assert "308(1)" in m.bns_sections
+    reverse = map_bns_to_ipc("308(1)")
+    assert any(e.ipc_section == "383" for e in reverse)
+    subject_hits = {e.ipc_section for e in search_by_subject("extortion")}
+    assert {"383", "384", "385"}.issubset(subject_hits)
+
+
+def test_batch2_cheating_personation_416_maps_to_bns_319():
+    m = map_ipc_to_bns("416")
+    assert m is not None
+    assert any(s.startswith("319") for s in m.bns_sections), m.bns_sections
+    # Reverse lookup — rollup mode pulls the 319 sub-section entries
+    reverse = map_bns_to_ipc("319")
+    assert any(e.ipc_section == "416" for e in reverse)
+
+
+def test_batch2_counterfeit_currency_489a_round_trip():
+    # Well-established mapping: IPC 489A → BNS 178 (no verification flag)
+    m = map_ipc_to_bns("489A")
+    assert m is not None
+    assert m.bns_sections == ["178"]
+    assert m.needs_verification is False
+    reverse = map_bns_to_ipc("178")
+    assert any(e.ipc_section == "489A" for e in reverse)
+
+
+def test_batch2_trafficking_370_subject_search_and_round_trip():
+    # Subject search on the common stem "traffick" matches both
+    # "Trafficking of person" (IPC 370) and "Exploitation of trafficked
+    # person" (IPC 370A). "trafficking" alone would miss 370A's past tense.
+    hits = {e.ipc_section for e in search_by_subject("traffick")}
+    assert {"370", "370A"}.issubset(hits)
+    # Round-trip 370 → BNS 143 → IPC 370 present in reverse
+    m = map_ipc_to_bns("370")
+    assert m is not None
+    assert "143" in m.bns_sections
+    reverse_ids = {e.ipc_section for e in map_bns_to_ipc("143")}
+    assert "370" in reverse_ids
+
+
+def test_ipc_380_maps_to_bns_305_not_others():
+    # Regression: the original IPC 380 entry claimed BNS 305 consolidates
+    # 380/381/382. Batch 2 showed 381→306 and 382→307 are distinct. This
+    # test locks in the corrected mapping and guards against drift.
+    m380 = map_ipc_to_bns("380")
+    assert m380 is not None
+    assert m380.bns_sections == ["305"]
+    assert "306" not in m380.bns_sections
+    assert "307" not in m380.bns_sections
+    assert m380.relationship == "one_to_one"
+
+    # Reverse: rollup lookup of BNS 305 must NOT pick up IPC 381 or 382.
+    reverse_305 = {e.ipc_section for e in map_bns_to_ipc("305")}
+    assert "380" in reverse_305
+    assert "381" not in reverse_305
+    assert "382" not in reverse_305
+
+    # Sanity: 381 and 382 have their own BNS targets.
+    assert map_ipc_to_bns("381").bns_sections == ["306"]
+    assert map_ipc_to_bns("382").bns_sections == ["307"]
+
+
+def test_batch2_kidnap_consolidation_rolls_up_to_bns_137():
+    # BNS 137 consolidates IPC 359, 360, 361, 363 (kidnapping family).
+    # Reverse lookup should return all four.
+    hits = {e.ipc_section for e in map_bns_to_ipc("137")}
+    assert {"359", "360", "361", "363"}.issubset(hits), hits
+    # Relationship for these is many_to_one
+    for ipc in ("359", "360", "361", "363"):
+        m = map_ipc_to_bns(ipc)
+        assert m is not None
+        assert m.relationship == "many_to_one", f"{ipc} rel={m.relationship}"
