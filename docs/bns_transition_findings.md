@@ -92,6 +92,49 @@ discussion of BNS's handling of post-377 offences.
 
 Verification status: Inferred from MHA Table + PRS note.
 
+## 6. IPC 124A (sedition) → BNS 150 under a double cloud
+
+The sedition offence under IPC 124A has been in judicially-imposed
+abeyance since May 2022. In *S.G. Vombatkere v Union of India*
+(W.P.(C) 682/2021) the Supreme Court directed that all pending IPC
+124A prosecutions be stayed and no fresh FIRs be registered under
+the section while it reconsidered the Kedar Nath Singh (1962)
+test in light of contemporary free-speech jurisprudence. The matter
+is still pending; IPC 124A has effectively been frozen — prosecutable
+on paper but not in practice — for the entirety of the BNS-drafting
+window.
+
+BNS 150 is the probable 124A successor but is actively contested in
+legal scholarship and its scope-relation to 124A is unsettled. One
+reading, urged by commentators critical of the BNS drafting, holds
+that 150 is *broader*: it explicitly names "financial means",
+"electronic communication", and "secession, armed rebellion,
+subversive activities" as modalities, opening prosecutorial surface
+area that 124A's single-word "disaffection" formula did not
+enumerate. A competing reading, urged by government-side commentary,
+holds that 150 is *narrower*: it removes the vague "disaffection
+towards government established by law" limb and requires a clearer
+actus reus (acts tending to endangerment of sovereignty, unity, or
+integrity). Both readings are defensible on the text alone; neither
+has been settled by the Supreme Court, and no reported BNS 150
+prosecution as of this mapping date has reached the SC.
+
+The NLP implication is material. Pre-2022 judgments under IPC 124A
+operate under Kedar Nath Singh's "tendency to incite violence" test;
+the Vombatkere stay has frozen any post-2022 doctrine development
+under IPC 124A; and BNS 150 doctrine is empty. A model trained on
+pre-2022 sedition convictions without temporal awareness will
+project Kedar Nath Singh doctrine forward onto BNS 150 fact
+patterns, over-confidently. The mapping entry flags this
+(`needs_verification: true`) but the robust fix is training-time
+temporal conditioning: the model should know that citing sedition
+doctrine for a 2024+ fact pattern requires hedging on both the stay
+and the scope-debate. Not a training-data problem; an evaluation
+problem.
+
+Verification status: Inferred from public legal commentary; awaits
+post-enactment case law.
+
 ---
 
 ## Next additions to this notebook (not yet written)

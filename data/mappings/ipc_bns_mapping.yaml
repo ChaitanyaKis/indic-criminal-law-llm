@@ -1282,3 +1282,82 @@ mappings:
     notes: "Placed in BNS Chapter V (women & children). Terminology: 'minor' → 'child'."
     needs_verification: true
     source: "MHA Table"
+
+  # =========================================================================
+  # BATCH 3 — inventory-driven priorities (top unmapped IPC sections from
+  # the first corpus snapshot: 34, 201, 161, 193, 504, 295A, 124A, 294)
+  # =========================================================================
+
+  - ipc: "34"
+    bns: ["3(5)"]
+    relationship: one_to_one
+    subject: "Common intention — joint liability"
+    ipc_title: "Acts done by several persons in furtherance of common intention"
+    bns_title: "Acts done by several persons in furtherance of common intention"
+    notes: "The joint-liability / common-intention rule. Ubiquitous — appears in most multi-accused criminal cases. BNS 3(5) retains the IPC 34 framework with near-identical wording."
+    source: "MHA Table"
+
+  - ipc: "201"
+    bns: ["238"]
+    relationship: one_to_one
+    subject: "Causing disappearance of evidence"
+    ipc_title: "Causing disappearance of evidence of offence, or giving false information to screen offender"
+    bns_title: "Causing disappearance of evidence of offence, or giving false information to screen offender"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "161"
+    bns: []
+    relationship: removed
+    subject: "Public servant taking gratification"
+    ipc_title: "Public servant taking gratification other than legal remuneration in respect of an official act"
+    bns_title: null
+    notes: "Repealed by the Prevention of Corruption Act 1988, which moved all public-corruption offences out of the IPC. Corruption of public servants now sits entirely in PCA 1988 §§7-13. BNS does not re-enact this provision — corruption remains a PCA matter."
+    needs_verification: false
+    source: "PCA 1988 §31 (repealing schedule)"
+
+  - ipc: "193"
+    bns: ["229"]
+    relationship: one_to_one
+    subject: "Punishment for false evidence"
+    ipc_title: "Punishment for false evidence"
+    bns_title: "Punishment for false evidence"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "504"
+    bns: ["352"]
+    relationship: one_to_one
+    subject: "Intentional insult to provoke breach of peace"
+    ipc_title: "Intentional insult with intent to provoke breach of the peace"
+    bns_title: "Intentional insult with intent to provoke breach of the peace"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "295A"
+    bns: ["299"]
+    relationship: one_to_one
+    subject: "Outraging religious feelings"
+    ipc_title: "Deliberate and malicious acts, intended to outrage religious feelings of any class by insulting its religion or religious beliefs"
+    bns_title: "Deliberate and malicious acts, intended to outrage religious feelings of any class by insulting its religion or religious beliefs"
+    notes: null
+    source: "MHA Table"
+
+  - ipc: "124A"
+    bns: ["150"]
+    relationship: one_to_one
+    subject: "Sedition"
+    ipc_title: "Sedition"
+    bns_title: "Acts endangering sovereignty, unity and integrity of India"
+    notes: "Sedition. Constitution Bench stay on IPC 124A prosecutions in S.G. Vombatkere v. Union of India (W.P.(C) 682/2021, May 2022) keeping the section in abeyance pending reconsideration. BNS 150 is the probable successor but is contested in legal scholarship: some read it as broader (adds 'financial means', 'electronic communication', explicit 'secession/armed rebellion' elements), others as narrower (removes vague 'disaffection towards government'). No post-BNS SC pronouncement on scope yet (as of this mapping). Model reasoning about sedition cases must handle the 124A-in-abeyance / 150-unsettled state explicitly."
+    needs_verification: true
+    source: "Inventory-driven priority; scholarship observation"
+
+  - ipc: "294"
+    bns: ["296"]
+    relationship: one_to_one
+    subject: "Obscene acts and songs in public"
+    ipc_title: "Obscene acts and songs"
+    bns_title: "Obscene acts and songs"
+    notes: null
+    source: "MHA Table"

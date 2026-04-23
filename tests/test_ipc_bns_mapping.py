@@ -367,6 +367,32 @@ def test_ipc_380_maps_to_bns_305_not_others():
     assert map_ipc_to_bns("382").bns_sections == ["307"]
 
 
+def test_ipc_34_round_trip():
+    # Batch 3: IPC 34 (common intention) → BNS 3(5); ubiquitous joint-
+    # liability mapping. Must round-trip cleanly.
+    m = map_ipc_to_bns("34")
+    assert m is not None
+    assert m.bns_sections == ["3(5)"]
+    assert m.relationship == "one_to_one"
+    # Rollup lookup on parent BNS 3 must include IPC 34 (via 3(5) → 3).
+    rollup_ids = {e.ipc_section for e in map_bns_to_ipc("3")}
+    assert "34" in rollup_ids
+    # Direct lookup on 3(5) must include IPC 34 too.
+    direct_ids = {e.ipc_section for e in map_bns_to_ipc("3(5)")}
+    assert "34" in direct_ids
+
+
+def test_ipc_161_removed_in_1988():
+    # Batch 3: IPC 161 was repealed in 1988 by the Prevention of
+    # Corruption Act, not rolled into BNS. Lock in the removed status.
+    m = map_ipc_to_bns("161")
+    assert m is not None
+    assert m.relationship == "removed"
+    assert m.bns_sections == []
+    assert m.notes is not None
+    assert "Prevention of Corruption Act" in m.notes
+
+
 def test_batch2_kidnap_consolidation_rolls_up_to_bns_137():
     # BNS 137 consolidates IPC 359, 360, 361, 363 (kidnapping family).
     # Reverse lookup should return all four.
