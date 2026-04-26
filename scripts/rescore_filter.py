@@ -32,10 +32,8 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import os
 import sys
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -43,6 +41,12 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT))
 
 from src.scrapers.criminal_filter import is_criminal  # noqa: E402
+from src.scrapers.state import (  # noqa: E402
+    load_state as _load_state_locked,
+    read_state,
+    state_lock,
+    write_state,
+)
 
 DEFAULT_DATA_DIR = _PROJECT_ROOT / "data" / "raw" / "supreme_court"
 DEFAULT_STATE_FILE = _PROJECT_ROOT / "data" / "raw" / "_state" / "scraped_sc.json"
@@ -50,22 +54,12 @@ DEFAULT_STATE_FILE = _PROJECT_ROOT / "data" / "raw" / "_state" / "scraped_sc.jso
 log = logging.getLogger("rescore_filter")
 
 
-# ---- State helpers (mirror the scraper's atomic write semantics) ------
+# ---- State helpers --------------------------------------------------
 
 
 def load_state(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        return {"docs": {}, "stats": {"by_year": {}}}
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def save_state_atomic(path: Path, state: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    state["last_updated"] = datetime.now(timezone.utc).isoformat()
-    tmp = path.with_name(path.name + ".tmp")
-    with tmp.open("w", encoding="utf-8") as f:
-        json.dump(state, f, indent=2, ensure_ascii=False)
-    os.replace(tmp, path)
+    """Locked one-shot read. Returns an empty-but-shaped dict if absent."""
+    return _load_state_locked(path, default={"docs": {}, "stats": {"by_year": {}}})
 
 
 # ---- Core rescore loop ------------------------------------------------
@@ -115,41 +109,42 @@ def compute_transitions(
 def apply_transitions(
     state_file: Path, transitions: dict[str, list[str]],
 ) -> int:
-    """Re-read the state file (to catch any scraper writes during
-    rescore), apply the confidence updates, and atomically save.
+    """Hold the state-file lock across read-modify-write so the scraper
+    can't clobber our confidence updates between our read and write.
 
     Returns the number of docs whose confidence was actually changed."""
-    current = load_state(state_file)
-    docs = current.setdefault("docs", {})
     changed = 0
-    for key, doc_ids in transitions.items():
-        if key == "unchanged":
-            continue
-        try:
-            old_conf, new_conf = key.split("->")
-        except ValueError:
-            continue
-        for did in doc_ids:
-            info = docs.get(did)
-            if info is None:
-                # Scraper may have newly added this; don't touch
+    with state_lock(state_file):
+        current = read_state(state_file, default={"docs": {}, "stats": {}})
+        docs = current.setdefault("docs", {})
+        for key, doc_ids in transitions.items():
+            if key == "unchanged":
                 continue
-            if info.get("confidence") != old_conf:
-                # Scraper revised it during rescore; leave alone
+            try:
+                old_conf, new_conf = key.split("->")
+            except ValueError:
                 continue
-            info["confidence"] = new_conf
-            changed += 1
+            for did in doc_ids:
+                info = docs.get(did)
+                if info is None:
+                    # Doc not in state (rare race-window hole); skip
+                    continue
+                if info.get("confidence") != old_conf:
+                    # Already changed (scraper or earlier rescore); skip
+                    continue
+                info["confidence"] = new_conf
+                changed += 1
 
-    # Recompute aggregate counts from the (possibly scraper-extended) docs
-    stats = current.setdefault("stats", {})
-    all_conf = Counter(
-        (info or {}).get("confidence") for info in docs.values()
-    )
-    stats["criminal_high_conf"] = all_conf.get("high", 0)
-    stats["criminal_medium_conf"] = all_conf.get("medium", 0)
-    stats["filtered_out"] = all_conf.get("filtered", 0)
+        # Recompute aggregate counts from the (possibly scraper-extended) docs
+        stats = current.setdefault("stats", {})
+        all_conf = Counter(
+            (info or {}).get("confidence") for info in docs.values()
+        )
+        stats["criminal_high_conf"] = all_conf.get("high", 0)
+        stats["criminal_medium_conf"] = all_conf.get("medium", 0)
+        stats["filtered_out"] = all_conf.get("filtered", 0)
 
-    save_state_atomic(state_file, current)
+        write_state(current, state_file)
     return changed
 
 

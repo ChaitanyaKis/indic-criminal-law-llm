@@ -63,6 +63,10 @@ data/processed/
 *.parquet
 *.pkl
 
+# Runtime state-file locks (filelock-managed, transient)
+data/raw/_state/*.lock
+data/processed/_state/*.lock
+
 # Models / checkpoints
 *.safetensors
 *.bin
