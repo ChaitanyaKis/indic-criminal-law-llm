@@ -34,7 +34,6 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import os
 import random
 import signal
 import sys
@@ -55,6 +54,10 @@ from src.scrapers.indian_kanoon import (  # noqa: E402
     RateLimitedError,
     RobotsDisallowed,
     ScraperError,
+)
+from src.scrapers.state import (  # noqa: E402
+    atomic_save_state,
+    load_state as _load_state_locked,
 )
 
 DEFAULT_OUTPUT_DIR = _PROJECT_ROOT / "data" / "raw" / "supreme_court"
@@ -108,11 +111,11 @@ def _fresh_state() -> dict[str, Any]:
 
 
 def load_state(path: Path) -> dict[str, Any]:
+    """Locked one-shot read with the same logging this script has had."""
     if not path.exists():
         log.info("No prior state at %s — starting fresh", path)
         return _fresh_state()
-    with path.open("r", encoding="utf-8") as f:
-        state = json.load(f)
+    state = _load_state_locked(path, default=_fresh_state())
     log.info(
         "Resuming from state: %d docs tracked, last_updated=%s",
         len(state.get("docs", {})),
@@ -121,13 +124,22 @@ def load_state(path: Path) -> dict[str, Any]:
     return state
 
 
-def save_state_atomic(path: Path, state: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    state["last_updated"] = datetime.now(timezone.utc).isoformat()
-    tmp = path.with_name(path.name + ".tmp")
-    with tmp.open("w", encoding="utf-8") as f:
-        json.dump(state, f, indent=2, ensure_ascii=False)
-    os.replace(tmp, path)
+def _check_no_stale_lock(state_path: Path) -> None:
+    """Refuse to start if a lock file already exists at the corresponding
+    ``.lock`` path. Guards against the 'two scrapers running' incident
+    by either catching an actively-held lock from another process or a
+    stale lock left behind by a crashed run. The user is directed to
+    delete the lock file manually if certain nothing else is using it.
+    """
+    lock_file = state_path.with_suffix(".lock")
+    if lock_file.exists():
+        raise RuntimeError(
+            f"Lock file exists at {lock_file}. Either:\n"
+            " - Another scraper or rescore is already running "
+            "(check Get-Process python),\n"
+            " - Or a previous run crashed and left a stale lock "
+            "(delete the lock file manually if certain nothing else is running)."
+        )
 
 
 # ---- Logging -----------------------------------------------------------
@@ -263,7 +275,7 @@ def run(
                             "%d consecutive 429s — flushing state, sleeping %ds, then one retry",
                             consecutive_429, COOLDOWN_AFTER_RATELIMIT_SECONDS,
                         )
-                        save_state_atomic(STATE_PATH, state)
+                        atomic_save_state(state, STATE_PATH)
                         time.sleep(COOLDOWN_AFTER_RATELIMIT_SECONDS)
                         try:
                             _process_one(
@@ -275,7 +287,7 @@ def run(
                                 "Still rate-limited after cooldown; exiting: %s",
                                 retry_exc,
                             )
-                            save_state_atomic(STATE_PATH, state)
+                            atomic_save_state(state, STATE_PATH)
                             return 2
                     continue
                 except ScraperError as e:
@@ -296,14 +308,14 @@ def run(
                     )
                     docs_since_flush += 1
                     if docs_since_flush >= STATE_FLUSH_EVERY_N_DOCS:
-                        save_state_atomic(STATE_PATH, state)
+                        atomic_save_state(state, STATE_PATH)
                         docs_since_flush = 0
 
-            save_state_atomic(STATE_PATH, state)
+            atomic_save_state(state, STATE_PATH)
 
     finally:
         pbar.close()
-        save_state_atomic(STATE_PATH, state)
+        atomic_save_state(state, STATE_PATH)
 
     return 0
 
@@ -360,6 +372,15 @@ def main(argv: list[str] | None = None) -> int:
     setup_logging()
     _install_sigint_handler()
 
+    # Refuse to start if another process holds the state lock (or left
+    # a stale one behind). This is the protection against the
+    # "two scrapers running" incident.
+    try:
+        _check_no_stale_lock(STATE_PATH)
+    except RuntimeError as e:
+        log.error(str(e))
+        return 4
+
     state = load_state(STATE_PATH)
     print_banner(args, state)
 
@@ -381,7 +402,7 @@ def main(argv: list[str] | None = None) -> int:
         )
     except Exception as e:  # noqa: BLE001
         log.exception("Fatal error: %s", e)
-        save_state_atomic(STATE_PATH, state)
+        atomic_save_state(state, STATE_PATH)
         return 1
     finally:
         print()
