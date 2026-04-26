@@ -85,3 +85,6 @@ logs/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Claude Code harness working directory
+.claude/
