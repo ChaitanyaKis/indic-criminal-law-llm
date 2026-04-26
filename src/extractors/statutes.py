@@ -199,8 +199,9 @@ def enrich_with_bns_mapping(citations: list[dict]) -> list[dict]:
             "notes": "...",
         }
 
-    CrPC ↔ BNSS and Evidence Act ↔ BSA enrichment is intentionally not
-    wired in yet — those mapping modules are still to be built.
+    CrPC enrichment is available via the parallel
+    :func:`enrich_with_bnss_mapping`; Evidence Act ↔ BSA enrichment is
+    not yet wired in.
     """
     # Imported here to keep the extractor import-safe even if the mapping
     # data file is temporarily absent (e.g. during early corpus setup).
@@ -216,6 +217,46 @@ def enrich_with_bns_mapping(citations: list[dict]) -> list[dict]:
             else:
                 out["bns_equivalent"] = {
                     "bns_sections": list(m.bns_sections),
+                    "relationship": m.relationship,
+                    "subject": m.subject,
+                    "needs_verification": m.needs_verification,
+                    "notes": m.notes,
+                }
+        enriched.append(out)
+    return enriched
+
+
+def enrich_with_bnss_mapping(citations: list[dict]) -> list[dict]:
+    """Annotate CrPC citations with their BNSS equivalent.
+
+    Parallel to :func:`enrich_with_bns_mapping`. Takes the output of
+    :func:`extract_statutes` and returns a new list with each CrPC
+    citation additionally carrying a ``"bnss_equivalent"`` key describing
+    the mapping. Non-CrPC entries are passed through unchanged.
+
+    The ``bnss_equivalent`` value is either ``None`` (no mapping found)
+    or a dict::
+
+        {
+            "bnss_sections": ["187(3)"],
+            "relationship": "one_to_one",
+            "subject": "Default bail on investigation timeout",
+            "needs_verification": True,
+            "notes": "..."
+        }
+    """
+    from src.mapping.crpc_bnss import map_crpc_to_bnss
+
+    enriched: list[dict] = []
+    for c in citations:
+        out = dict(c)
+        if c.get("act") == "CrPC":
+            m = map_crpc_to_bnss(c.get("section", ""))
+            if m is None:
+                out["bnss_equivalent"] = None
+            else:
+                out["bnss_equivalent"] = {
+                    "bnss_sections": list(m.bnss_sections),
                     "relationship": m.relationship,
                     "subject": m.subject,
                     "needs_verification": m.needs_verification,

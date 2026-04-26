@@ -4,6 +4,17 @@
 
 ---
 
+## Current status (April 2026)
+
+- **Corpus**: 1,579 Supreme Court criminal judgments scraped (2015–2024, full year coverage). Resumable lockfile-protected scraping pipeline. HC scraping not yet started.
+- **Statute mapping**: **216 entries total** — 149 IPC↔BNS (four inventory-driven batches; top-50 cited IPC sections covered 100%) + 67 CrPC↔BNSS (Batch 5; v0 with 100% `needs_verification` pending Gazette cross-check). Evidence↔BSA module not yet started.
+- **Findings**: **9** BNS-transition observations published in `docs/bns_transition_findings.md`, plus the standalone empirical write-up in `docs/findings/2026-04-26_bns_at_sc_empirical.md`.
+- **Tests**: **106 passing** (1 pre-existing HF-Hub network flake on the embedder test, unrelated to mapping or scraper code).
+- **Embedding + RAG stack** (citation-verified): wired but not yet run at full corpus scale; smoke-tested on 20 docs / 441 chunks.
+- **Inventory diagnostics**: corpus inventory tool runs in ~2 min on the full corpus and produces a structured snapshot driving every mapping batch's priorities.
+
+---
+
 ## 0. Locked Decisions
 
 | Decision | Value |

@@ -206,6 +206,122 @@ Verification status: Direct empirical observation from the project's
 own corpus inventory. Numbers reproducible via
 `python scripts/inventory_corpus.py`.
 
+## 9. CrPC → BNSS: substantive procedural shifts to track
+
+The procedural-code mapping (CrPC 1973 → BNSS 2023) is a structurally
+different exercise from IPC → BNS. Most of CrPC carries forward in
+BNSS as renumbering with substantive frameworks intact, but four
+procedural shifts are doctrinally consequential and worth flagging
+for any retrieval system trained on pre-2024 procedural jurisprudence.
+
+**Default-bail timeline grid (CrPC 167(2) → BNSS 187(3)).** This is
+the highest-stakes single procedural mapping in the entire transition.
+Under CrPC 167(2), an accused becomes entitled to bail if the
+chargesheet is not filed within 60 days (offences punishable with up
+to 10 years) or 90 days (offences punishable with death/life/10+
+years). The Sanjay Dutt → Bikramjit Singh → Sanjay Kumar Agarwal line
+of jurisprudence rests on this section. BNSS 187 carries the
+framework forward but is widely understood to introduce a new
+extended ceiling (up to 180 days) for organised-crime and
+terrorist-act offences (corresponding to BNS 111 and BNS 113, both
+new-in-BNS substantive offences). Whether this extension lives within
+187 itself or in a parallel BNSS provision needs Gazette
+verification. The mapping flags both 167 and 167(2) as
+``needs_verification: true``.
+
+**Anticipatory bail (CrPC 438 → BNSS 482) — note the number
+collision.** CrPC 438 (the Sushila Aggarwal Constitution Bench
+framework) maps to BNSS 482. This is unrelated to CrPC 482 (HC
+inherent powers, → BNSS 528). Whether BNSS 482 narrows the scope of
+anticipatory bail with explicit offence-category exclusions — and how
+the Sushila Aggarwal limits-of-pre-arrest-bail framework re-applies
+under BNSS 482 — is contested in scholarship and unresolved at the
+SC level. The test suite at `tests/test_crpc_bnss_mapping.py::
+test_482_does_not_alias_to_482` guards against autocomplete or
+copy-paste edits that would silently introduce the wrong mapping.
+
+**Inherent powers of the High Court (CrPC 482 → BNSS 528).** The
+most-cited procedural section in the corpus (345 of 4,135 CrPC
+citations, rank 1 by a wide margin). Quash-petition jurisprudence
+hangs entirely on this section. BNSS 528 retains the three classical
+limbs (give effect to any order under the Sanhita / prevent abuse of
+process / secure the ends of justice) verbatim. Whether the BNSS
+introduces any subtle scope limits — e.g., an explicit non-quashable
+list for serious offences — is the verification question.
+
+**Arnesh Kumar arrest-protection regime (CrPC 41/41A → BNSS 35/35(7)).**
+CrPC 41A was inserted after Arnesh Kumar v State of Bihar (2014) to
+codify the notice-instead-of-arrest framework for offences punishable
+with imprisonment of seven years or less. The compliance regime
+(mandatory case-diary entries, magisterial scrutiny, recorded reasons
+for departing from notice) is heavily-cited current procedural-
+protection jurisprudence. Whether BNSS folds 41A into a sub-section
+of 35 (i.e. 35(7)) or retains it as a free-standing 35A is the
+verification question — recall is approximately 35(7) but uncertain.
+
+**Police statements (CrPC 161 → BNSS 180): substantive enhancement.**
+Beyond the renumbering, BNSS 180 is reported to introduce mandatory
+audio-video recording of statements taken under the police-statement
+provision in offences punishable with seven-plus years' imprisonment.
+This is a substantive evidentiary upgrade: a defective or absent
+recording becomes a new possible vector for challenging admissibility
+or fairness of investigation. The 162 bar on use of police statements
+(→ BNSS 181) is otherwise carried forward.
+
+**New in BNSS (no CrPC predecessor).** Two procedural innovations
+appear on the new-in-BNSS side and warrant explicit mention. First,
+BNSS introduces a formal **trial-in-absentia** framework for
+proclaimed offenders (used together with BNSS 84 / CrPC 82
+proclamation procedure). Pre-BNSS criminal trials required the
+accused's presence with limited exceptions; BNSS codifies an explicit
+trial-in-absentia mechanism. Second, BNSS makes **electronic /
+video-conferencing trial proceedings** a default option subject to
+court direction, rather than the limited exception they were under
+CrPC. Both are doctrinally consequential and worth tracking in
+future SC engagement.
+
+**Empirical observation — plea bargaining is invisible at SC.** The
+1,579-doc corpus inventory shows that CrPC 265A-265L (the plea
+bargaining provisions inserted by the Code of Criminal Procedure
+(Amendment) Act, 2005) do not appear in the top-50 cited sections,
+nor any of them in the top-100. This suggests limited apex-level
+engagement with the plea-bargaining framework despite its 18-year
+availability — an empirical signature of how rarely the SC takes up
+plea-bargaining questions on appeal. BNSS retains the plea bargaining
+chapter with renumbering (290-300, pending exact verification).
+Whether SC engagement with plea bargaining will increase under BNSS
+is an empirical question for future corpus snapshots, but the
+baseline going in is that the framework runs almost entirely in
+trial courts and rarely reaches the apex docket.
+
+Verification status: All six CrPC → BNSS mappings flagged in this
+finding carry ``needs_verification: true`` in
+`data/mappings/crpc_bnss_mapping.yaml`, reflecting that the entire
+table was built from MHA Comparative Table recall rather than against
+the enacted Gazette text. The substantive-shift claims above are
+sourced to PRS India's analytical note and standard practitioner
+references; sub-section indices in particular need a line-by-line
+cross-check.
+
+### Empirical pattern: systematic chapter-shift produces predictable section-number collisions
+
+The CrPC→BNSS renumbering is not random; it's a structural insertion
+of new chapters that systematically pushes existing sections down by
++20 positions (investigation chapter: CrPC 153–176 → BNSS 173–196)
+or +40-46 positions (appellate/bail/inherent-powers: CrPC 397/438/482
+→ BNSS 438/482/528). Ten section-number collisions were detected in
+our 67-entry mapping table — every one of them is the natural
+consequence of this shift, not a typo.
+
+Practical implication: a practitioner saying "Section 482" in 2026+
+must specify CrPC 482 (HC inherent powers, doctrine carrier) or BNSS
+482 (anticipatory bail). The same number now denotes wholly unrelated
+provisions. Any legal-NLP system that doesn't disambiguate by code
+will silently misroute reasoning. Our mapping schema (separate
+crpc_section / bnss_sections fields) preserves the disambiguation;
+free-text retrieval over corpus that conflates "Section 482" citations
+will not.
+
 ---
 
 ## Next additions to this notebook (not yet written)

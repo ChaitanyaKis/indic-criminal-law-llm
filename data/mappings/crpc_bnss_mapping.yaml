@@ -1,0 +1,753 @@
+# CrPC ↔ BNSS Section Mapping
+#
+# Procedural-code mapping: Code of Criminal Procedure, 1973 ↔
+# Bharatiya Nagarik Suraksha Sanhita, 2023. Effective for proceedings
+# initiated on or after 1 July 2024.
+#
+# Source of truth: MHA Comparative Table published with the BNSS Bill
+# (2023) and the PRS India side-by-side comparison. Sub-section
+# precision is more doctrinally consequential here than in the
+# substantive-code mapping (IPC↔BNS), so entries are flagged
+# ``needs_verification: true`` aggressively wherever recall-based
+# memory of the comparative tables doesn't meet a 95%+ confidence bar
+# against the enacted Gazette text.
+#
+# Number-collision watch: CrPC 482 (HC inherent powers) → BNSS 528.
+# BNSS 482 is anticipatory bail (← CrPC 438). The test
+# ``test_482_does_not_alias_to_482`` enforces this distinction.
+#
+# Ordering: built phase-by-phase, in citation-frequency-driven priority
+# order from the 1,579-doc Supreme Court corpus inventory snapshot of
+# 2026-04-26. Phase boundaries marked in comments below.
+
+version: "0.1"
+source: "MHA Comparative Table (BNSS Bill 2023); PRS India BNSS analytical note (2023)"
+last_verified: "2026-04-26"
+
+mappings:
+
+  # =========================================================================
+  # PHASE A — Inherent / revisional powers (3 entries)
+  # =========================================================================
+  # CrPC 482 alone accounts for 345 of the 4,135 CrPC citations in the
+  # corpus (rank 1 by a wide margin). Every quash-petition jurisprudence
+  # rests on this section; the BNSS 528 carry-over is the highest-stakes
+  # single mapping in this entire table.
+
+  - crpc: "482"
+    bnss: ["528"]
+    relationship: one_to_one
+    subject: "Inherent powers of the High Court"
+    crpc_title: "Saving of inherent powers of High Court"
+    bnss_title: "Saving of inherent powers of High Court"
+    notes: "The most-cited CrPC section in the corpus (345 citations of 4,135 total). BNSS 528 retains the inherent-powers framework verbatim — including the three classical limbs (give effect to any order under this Sanhita / prevent abuse of process / secure the ends of justice). Whether the BNSS makes any subtle scope changes (e.g., explicit limits on quashing in heinous offences) is the verification question — recall-based mapping pending Gazette cross-check. NUMBER COLLISION: BNSS 482 is anticipatory bail (CrPC 438), unrelated to this section."
+    needs_verification: true
+    source: "MHA Table (recall); flagged for Gazette verification per Guardrail 1"
+
+  - crpc: "401"
+    bnss: ["442"]
+    relationship: one_to_one
+    subject: "High Court's powers of revision"
+    crpc_title: "High Court's powers of revision"
+    bnss_title: "High Court's powers of revision"
+    notes: "The HC revisional power retained in BNSS 442. Sub-section structure governs whether the BNSS limits revision after a Sessions Court has already exercised concurrent revision under 397/438; needs verification."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "397"
+    bnss: ["438"]
+    relationship: one_to_one
+    subject: "Concurrent revisional jurisdiction"
+    crpc_title: "Calling for records to exercise powers of revision"
+    bnss_title: "Calling for records to exercise powers of revision"
+    notes: "Concurrent revisional jurisdiction of HC and Sessions Court. BNSS 438 retains the framework; the 397(3) bar on second revision after one has been exercised is the doctrinal load-bearing piece — verification needed."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # =========================================================================
+  # PHASE B — Investigation chapter (~13 entries)
+  # =========================================================================
+  # The cluster covering FIR registration through chargesheet:
+  # CrPC 154-176. BNSS reorganized this chapter; sub-section indices are
+  # the dominant uncertainty. Several sections (161, 162, 164) carry
+  # heavy admissibility doctrine and substantive shifts (mandatory
+  # video-recording for some statement classes is a new BNSS provision
+  # worth flagging in Finding #9).
+
+  - crpc: "154"
+    bnss: ["173"]
+    relationship: one_to_one
+    subject: "FIR — first information report"
+    crpc_title: "Information in cognizable cases"
+    bnss_title: "Information in cognizable cases"
+    notes: "FIR registration framework retained. BNSS 173 introduces explicit provisions for electronic FIR (e-FIR) and zero-FIR clarifications — this is a non-trivial NLP shift since pre-2024 case law treats FIR jurisdiction differently. Sub-section precision pending."
+    needs_verification: true
+    source: "MHA Table (recall); PRS India note on e-FIR provisions"
+
+  - crpc: "155"
+    bnss: ["174"]
+    relationship: one_to_one
+    subject: "Information in non-cognizable cases"
+    crpc_title: "Information as to non-cognizable cases and investigation"
+    bnss_title: "Information as to non-cognizable cases and investigation"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "156"
+    bnss: ["175"]
+    relationship: one_to_one
+    subject: "Police power to investigate cognizable cases"
+    crpc_title: "Police officer's power to investigate cognizable case"
+    bnss_title: "Police officer's power to investigate cognizable case"
+    notes: "Police investigation power. The 156(3) Magistrate-direction limb is famously cited (66 corpus citations) and is preserved in BNSS 175(3); see separate entry."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "156(3)"
+    bnss: ["175(3)"]
+    relationship: one_to_one
+    subject: "Magistrate-ordered investigation"
+    crpc_title: "Police officer's power to investigate cognizable case (Magistrate's direction)"
+    bnss_title: "Police officer's power to investigate cognizable case (Magistrate's direction)"
+    notes: "The Magistrate's power to direct police investigation under 156(3) — used to compel registration of FIR or further investigation when police fail to act. BNSS 175(3) retains the framework; whether the BNSS adds explicit pre-conditions (e.g., requirement to first approach SHO under 154(3)) is the verification question."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "157"
+    bnss: ["176"]
+    relationship: one_to_one
+    subject: "Investigation procedure"
+    crpc_title: "Procedure for investigation"
+    bnss_title: "Procedure for investigation"
+    notes: "Includes the mandatory FIR-to-Magistrate transmission timing. BNSS 176 may add explicit electronic-transmission provisions — verify."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "161"
+    bnss: ["180"]
+    relationship: one_to_one
+    subject: "Police statements during investigation"
+    crpc_title: "Examination of witnesses by police"
+    bnss_title: "Examination of witnesses by police"
+    notes: "The 161 statement framework — central to police-investigation admissibility doctrine (188 corpus citations). BNSS 180 introduces a substantive shift: mandatory audio-video recording of statements in offences punishable with seven-plus years. This is a paper-worthy procedural enhancement and changes the evidentiary landscape for serious cases. See Finding #9."
+    needs_verification: true
+    source: "MHA Table (recall); PRS India note on video-recording requirement"
+
+  - crpc: "162"
+    bnss: ["181"]
+    relationship: one_to_one
+    subject: "Bar on use of police statements"
+    crpc_title: "Statements to police not to be signed; use of statements in evidence"
+    bnss_title: "Statements to police not to be signed; use of statements in evidence"
+    notes: "The 162 bar (with the 1872-Evidence-Act 145 exception for contradiction) is preserved in BNSS 181."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "164"
+    bnss: ["183"]
+    relationship: one_to_one
+    subject: "Magistrate-recorded statements and confessions"
+    crpc_title: "Recording of confessions and statements"
+    bnss_title: "Recording of confessions and statements"
+    notes: "Magistrate recording of 164 confessions and 164 statements (the rape-victim statement framework after 2013 amendment). BNSS 183 retains this; the corresponding video-recording mandate that BNSS 180 introduces for police statements may also extend to Magistrate-recorded statements — verify."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "173"
+    bnss: ["193"]
+    relationship: one_to_one
+    subject: "Investigation report (chargesheet)"
+    crpc_title: "Report of police officer on completion of investigation"
+    bnss_title: "Report of police officer on completion of investigation"
+    notes: "The chargesheet section. BNSS 193 retains the framework; the BNSS introduces an explicit 90-day-from-arrest cap on filing chargesheet for offences punishable with seven-plus years (carrying forward the 167 Sub-section (2) timeline into the report-side as well). Verify exact sub-section structure."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "173(2)"
+    bnss: ["193(3)"]
+    relationship: one_to_one
+    subject: "Final report contents"
+    crpc_title: "Report of police officer on completion of investigation — contents"
+    bnss_title: "Report of police officer on completion of investigation — contents"
+    notes: "The contents-of-final-report sub-section. BNSS sub-index needs verification — could be 193(3) or 193(2)."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "173(8)"
+    bnss: ["193(9)"]
+    relationship: one_to_one
+    subject: "Further investigation"
+    crpc_title: "Power of further investigation after final report"
+    bnss_title: "Power of further investigation after final report"
+    notes: "Further investigation power — used after chargesheet is filed when fresh evidence emerges. BNSS retains; sub-index uncertain (could be 193(8) or 193(9))."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "174"
+    bnss: ["194"]
+    relationship: one_to_one
+    subject: "Police inquest into unnatural death"
+    crpc_title: "Police to inquire and report on suicide, etc."
+    bnss_title: "Police to inquire and report on suicide, etc."
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "175"
+    bnss: ["195"]
+    relationship: one_to_one
+    subject: "Power to summon during investigation"
+    crpc_title: "Power to summon persons"
+    bnss_title: "Power to summon persons"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "176"
+    bnss: ["196"]
+    relationship: one_to_one
+    subject: "Magisterial inquiry into unnatural death"
+    crpc_title: "Inquiry by Magistrate into cause of death"
+    bnss_title: "Inquiry by Magistrate into cause of death"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # =========================================================================
+  # PHASE C — Bail chapter (6 entries)
+  # =========================================================================
+  # The headline-shift area. Default-bail under 167(2) (timeline grids
+  # 60/90/180 days) and anticipatory bail under 438 are the two doctrines
+  # most heavily cited. The number-collision in BNSS 482 (anticipatory
+  # bail) lives in this phase.
+
+  - crpc: "167"
+    bnss: ["187"]
+    relationship: one_to_one
+    subject: "Remand and detention"
+    crpc_title: "Procedure when investigation cannot be completed in twenty-four hours"
+    bnss_title: "Procedure when investigation cannot be completed in twenty-four hours"
+    notes: "The general remand machinery. BNSS 187 retains the structure; the 167(2) default-bail timeline grids (60/90 days for offences with 10/lesser-than-10-year imprisonment) is the doctrine carrier — see separate entry for 167(2)."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "167(2)"
+    bnss: ["187(3)"]
+    relationship: one_to_one
+    subject: "Default bail on investigation timeout"
+    crpc_title: "Default bail when investigation not completed in 60/90 days"
+    bnss_title: "Default bail when investigation not completed in 60/90 days"
+    notes: "DOCTRINE-CARRYING SECTION. The 167(2) default-bail right — accused is entitled to bail if chargesheet not filed within 60 days (offence punishable with imprisonment of less than 10 years) or 90 days (offences punishable with death/life/10+ years). The Sanjay Dutt and Bikramjit Singh lines of jurisprudence rest on this section. BNSS 187(3) is the structural successor; the BNSS may have introduced a 180-day extended ceiling for organised-crime / terrorist-act offences (BNS 111, 113) — verify whether this is in 187 itself or a parallel provision. This is one of the most consequential procedural mappings in the entire transition and needs Gazette verification before any high-confidence claim. Per Guardrail 1, marked needs_verification: true."
+    needs_verification: true
+    source: "MHA Table (recall); flagged for Gazette verification per Guardrail 1"
+
+  - crpc: "437"
+    bnss: ["480"]
+    relationship: one_to_one
+    subject: "Bail at Magistrate level"
+    crpc_title: "When bail may be taken in case of non-bailable offence"
+    bnss_title: "When bail may be taken in case of non-bailable offence"
+    notes: "Magistrate-tier bail framework — the 437(1) classification of who may be granted bail (woman/sick/under-16) and the 437(3) conditions are doctrine-bearing. BNSS 480 retains; sub-section structure pending."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "438"
+    bnss: ["482"]
+    relationship: one_to_one
+    subject: "Anticipatory bail"
+    crpc_title: "Direction for grant of bail to person apprehending arrest"
+    bnss_title: "Direction for grant of bail to person apprehending arrest"
+    notes: "Anticipatory bail — the Sibbia line of jurisprudence. NUMBER COLLISION ALERT: this maps to BNSS 482, which is the BNSS section number for anticipatory bail. CrPC 482 (inherent powers) is unrelated and maps to BNSS 528. Whether BNSS 482 narrows the scope of anticipatory bail (e.g., explicit exclusions for certain offence categories) is contested in scholarship; the Sushila Aggarwal (2020) Constitution Bench framework needs to be re-examined under BNSS 482 once SC engagement begins. Per Guardrail 1, marked needs_verification: true."
+    needs_verification: true
+    source: "MHA Table (recall); flagged for Gazette verification per Guardrail 1"
+
+  - crpc: "439"
+    bnss: ["483"]
+    relationship: one_to_one
+    subject: "Bail at Sessions / High Court level"
+    crpc_title: "Special powers of High Court or Court of Session regarding bail"
+    bnss_title: "Special powers of High Court or Court of Session regarding bail"
+    notes: "Higher-court bail jurisdiction. BNSS 483 retains."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "433A"
+    bnss: ["475"]
+    relationship: one_to_one
+    subject: "14-year minimum for life-convict commutation"
+    crpc_title: "Restriction on powers of remission or commutation in certain cases"
+    bnss_title: "Restriction on powers of remission or commutation in certain cases"
+    notes: "The 14-year actual-imprisonment floor before life-convict's remission can be considered. Carried over to BNSS 475 (or near). Sub-section index uncertain."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # =========================================================================
+  # PHASE D — Trial process (~13 entries)
+  # =========================================================================
+  # Complaint-stage through accused-examination. CrPC 313 (262 corpus
+  # citations) is the highest-cited section in this phase and the
+  # accused-examination doctrine carrier.
+
+  - crpc: "200"
+    bnss: ["223"]
+    relationship: one_to_one
+    subject: "Examination of complainant"
+    crpc_title: "Examination of complainant"
+    bnss_title: "Examination of complainant"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "202"
+    bnss: ["225"]
+    relationship: one_to_one
+    subject: "Magistrate inquiry on complaint"
+    crpc_title: "Postponement of issue of process"
+    bnss_title: "Postponement of issue of process"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "203"
+    bnss: ["226"]
+    relationship: one_to_one
+    subject: "Dismissal of complaint"
+    crpc_title: "Dismissal of complaint"
+    bnss_title: "Dismissal of complaint"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "204"
+    bnss: ["227"]
+    relationship: one_to_one
+    subject: "Issue of process"
+    crpc_title: "Issue of process"
+    bnss_title: "Issue of process"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "207"
+    bnss: ["230"]
+    relationship: one_to_one
+    subject: "Documents furnished to accused"
+    crpc_title: "Supply to accused of copy of police report and other documents"
+    bnss_title: "Supply to accused of copy of police report and other documents"
+    notes: "The 207 list — chargesheet, FIR, police statements — is doctrine-bearing for fair-trial jurisprudence. BNSS 230 retains."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "209"
+    bnss: ["232"]
+    relationship: one_to_one
+    subject: "Commitment of cases to Sessions"
+    crpc_title: "Commitment of case to Court of Session when offence is triable exclusively by it"
+    bnss_title: "Commitment of case to Court of Session when offence is triable exclusively by it"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "227"
+    bnss: ["250"]
+    relationship: one_to_one
+    subject: "Discharge at Sessions stage"
+    crpc_title: "Discharge"
+    bnss_title: "Discharge"
+    notes: "Sessions-stage discharge — the Sajjan Kumar / Niranjan Singh framework rests on this section."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "228"
+    bnss: ["251"]
+    relationship: one_to_one
+    subject: "Framing of charge at Sessions"
+    crpc_title: "Framing of charge"
+    bnss_title: "Framing of charge"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "239"
+    bnss: ["262"]
+    relationship: one_to_one
+    subject: "Discharge in warrant cases"
+    crpc_title: "When accused shall be discharged"
+    bnss_title: "When accused shall be discharged"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "311"
+    bnss: ["348"]
+    relationship: one_to_one
+    subject: "Power to summon witness or recall examined witness"
+    crpc_title: "Power to summon material witness, or examine person present"
+    bnss_title: "Power to summon material witness, or examine person present"
+    notes: "The 311 power — court's discretion to summon any witness or recall an examined witness for re-examination. BNSS 348 retains."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "313"
+    bnss: ["351"]
+    relationship: one_to_one
+    subject: "Examination of accused"
+    crpc_title: "Power to examine the accused"
+    bnss_title: "Power to examine the accused"
+    notes: "The 313 examination — opportunity for accused to personally explain incriminating circumstances. The Reena Hazarika line + 313(1)(b) mandatory examination on prosecution evidence is doctrine-bearing (262 corpus citations, rank 2). BNSS 351 retains the framework. Whether BNSS allows electronic / video-conferencing-mode 313 examination as a default option (rather than being limited to special circumstances) is the verification question."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "319"
+    bnss: ["358"]
+    relationship: one_to_one
+    subject: "Power to add accused on prima facie evidence"
+    crpc_title: "Power to proceed against other persons appearing to be guilty of offence"
+    bnss_title: "Power to proceed against other persons appearing to be guilty of offence"
+    notes: "The 319 power — Hardeep Singh (2014, Constitution Bench) framework. BNSS 358 retains; verify whether the 'prima facie strong evidence' threshold is codified."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "320"
+    bnss: ["359"]
+    relationship: one_to_one
+    subject: "Compounding of offences"
+    crpc_title: "Compounding of offences"
+    bnss_title: "Compounding of offences"
+    notes: "The compounding tables (320(1) compoundable offences, 320(2) compoundable with court permission) are sub-section-heavy and need precise BNSS sub-section verification."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # =========================================================================
+  # PHASE E — Cognizance + sanction + arrest + appeal + remainder (~28 entries)
+  # =========================================================================
+  # Fills out the top-50+ priority list. Includes the Arnesh-Kumar
+  # arrest-protection regime (CrPC 41/41A), public-servant sanction
+  # framework (CrPC 197), and the appellate / revisional sections.
+
+  # ---- Arrest chapter (CrPC 41-58 → BNSS 35-65) ---------------------------
+
+  - crpc: "41"
+    bnss: ["35"]
+    relationship: one_to_one
+    subject: "Arrest without warrant"
+    crpc_title: "When police may arrest without warrant"
+    bnss_title: "When police may arrest without warrant"
+    notes: "The arrest-without-warrant power. The 41(1)(b) offence-categorisation grid (offences with imprisonment up to seven years require recorded reasons under the Arnesh Kumar framework) is preserved in BNSS 35. Whether BNSS 35 renumbers the sub-sections or codifies the Arnesh Kumar pre-conditions explicitly is the verification question."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "41A"
+    bnss: ["35(7)"]
+    relationship: one_to_one
+    subject: "Notice of appearance instead of arrest"
+    crpc_title: "Notice of appearance before police officer"
+    bnss_title: "Notice of appearance before police officer"
+    notes: "ARNESH KUMAR REGIME. CrPC 41A was inserted after Arnesh Kumar v State of Bihar (2014) to codify the notice-instead-of-arrest framework for offences punishable with imprisonment of seven years or less. Whether BNSS folds this into 35(7) as a sub-section or retains it as a free-standing 35A is the verification question — recall is approximately 35(7) but uncertain. Per Guardrail 1, marked needs_verification: true. The Arnesh Kumar compliance doctrine (mandatory case-diary entries, magisterial scrutiny under 41 read with 41A) is one of the most heavily-cited procedural-protection frameworks in current SC jurisprudence."
+    needs_verification: true
+    source: "MHA Table (recall); flagged for Gazette verification per Guardrail 1"
+
+  - crpc: "41B"
+    bnss: ["36"]
+    relationship: one_to_one
+    subject: "Procedure of arrest"
+    crpc_title: "Procedure of arrest and duties of officer making arrest"
+    bnss_title: "Procedure of arrest and duties of officer making arrest"
+    notes: "Memo of arrest and witness-attestation requirements. BNSS 36 retains."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "41C"
+    bnss: ["37"]
+    relationship: one_to_one
+    subject: "Police control rooms — arrest information"
+    crpc_title: "Control room at districts"
+    bnss_title: "Designation of police officer in charge of police station"
+    notes: "Note: BNSS may have restructured this section significantly, possibly renaming or merging the control-room provisions. Verify."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "41D"
+    bnss: ["38"]
+    relationship: one_to_one
+    subject: "Right of arrested person to consult lawyer"
+    crpc_title: "Right of arrested person to meet an advocate of his choice during interrogation"
+    bnss_title: "Right of arrested person to meet an advocate of his choice during interrogation"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "50"
+    bnss: ["47"]
+    relationship: one_to_one
+    subject: "Right to be informed of grounds of arrest"
+    crpc_title: "Person arrested to be informed of grounds of arrest and of right to bail"
+    bnss_title: "Person arrested to be informed of grounds of arrest and of right to bail"
+    notes: "Constitutional Article 22(1) implementation. BNSS 47 retains."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "50A"
+    bnss: ["48"]
+    relationship: one_to_one
+    subject: "Information of arrest to friends or relatives"
+    crpc_title: "Obligation of person making arrest to inform about arrest"
+    bnss_title: "Obligation of person making arrest to inform about arrest"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "53"
+    bnss: ["51"]
+    relationship: one_to_one
+    subject: "Medical examination of accused"
+    crpc_title: "Examination of accused by medical practitioner at request of police officer"
+    bnss_title: "Examination of accused by medical practitioner at request of police officer"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "53A"
+    bnss: ["52"]
+    relationship: one_to_one
+    subject: "Medical examination of rape accused"
+    crpc_title: "Examination of person accused of rape by medical practitioner"
+    bnss_title: "Examination of person accused of rape by medical practitioner"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "54"
+    bnss: ["53"]
+    relationship: one_to_one
+    subject: "Medical examination at request of accused"
+    crpc_title: "Examination of arrested person by medical officer"
+    bnss_title: "Examination of arrested person by medical officer"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "57"
+    bnss: ["58"]
+    relationship: one_to_one
+    subject: "24-hour rule"
+    crpc_title: "Person arrested not to be detained more than twenty-four hours"
+    bnss_title: "Person arrested not to be detained more than twenty-four hours"
+    notes: "Constitutional Article 22(2) implementation. BNSS 58 retains."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "82"
+    bnss: ["84"]
+    relationship: one_to_one
+    subject: "Proclamation for absconding accused"
+    crpc_title: "Proclamation for person absconding"
+    bnss_title: "Proclamation for person absconding"
+    notes: "Used together with BNSS 'trial in absentia' framework (which is new in BNSS) — see new_in_bnss entry below."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # ---- Cognizance and sanction (190-197) ---------------------------------
+
+  - crpc: "190"
+    bnss: ["210"]
+    relationship: one_to_one
+    subject: "Magistrate's cognizance of offence"
+    crpc_title: "Cognizance of offences by Magistrates"
+    bnss_title: "Cognizance of offences by Magistrates"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "195"
+    bnss: ["215"]
+    relationship: one_to_one
+    subject: "Prosecution for offences against state or justice"
+    crpc_title: "Prosecution for contempt of lawful authority of public servants, for offences against public justice and for offences relating to documents given in evidence"
+    bnss_title: "Prosecution for contempt of lawful authority of public servants, for offences against public justice and for offences relating to documents given in evidence"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "196"
+    bnss: ["216"]
+    relationship: one_to_one
+    subject: "Sanction for prosecution — sedition, etc."
+    crpc_title: "Prosecution for offences against the State and for criminal conspiracy to commit such offence"
+    bnss_title: "Prosecution for offences against the State and for criminal conspiracy to commit such offence"
+    notes: "Sanction-to-prosecute for state-affecting offences. The IPC 124A (sedition) successor at BNS 150 will be triggered through BNSS 216. Cross-reference with Finding #6 in bns_transition_findings.md."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "197"
+    bnss: ["218"]
+    relationship: one_to_one
+    subject: "Sanction for prosecution of public servants"
+    crpc_title: "Prosecution of Judges and public servants"
+    bnss_title: "Prosecution of Judges and public servants"
+    notes: "Public-servant prosecution sanction — gateway provision for Prevention of Corruption Act prosecutions. BNSS 218 retains; whether the BNSS narrows the 'official duty' nexus test (Devinder Singh / Dr Subramanian Swamy line) is the verification question."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # ---- Maintenance (125 — common, citation-frequency 28) -----------------
+
+  - crpc: "125"
+    bnss: ["144"]
+    relationship: one_to_one
+    subject: "Maintenance"
+    crpc_title: "Order for maintenance of wives, children and parents"
+    bnss_title: "Order for maintenance of wives, children and parents"
+    notes: "Maintenance jurisdiction. BNSS 144 retains the framework."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # ---- Trial-process remainder (309, 340, 354(3), 357, 366) --------------
+
+  - crpc: "309"
+    bnss: ["346"]
+    relationship: one_to_one
+    subject: "Power to postpone proceedings"
+    crpc_title: "Power to postpone or adjourn proceedings"
+    bnss_title: "Power to postpone or adjourn proceedings"
+    notes: "Adjournment-control framework — the 309 'speedy trial' obligation. BNSS 346 retains; verify whether the BNSS adds explicit adjournment-cap provisions."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "340"
+    bnss: ["379"]
+    relationship: one_to_one
+    subject: "Procedure for offences against public justice"
+    crpc_title: "Procedure in cases mentioned in section 195"
+    bnss_title: "Procedure in cases mentioned in section 215"
+    notes: "Used for perjury / fabrication-of-evidence prosecutions where the offence is committed in or in relation to a court proceeding."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "354(3)"
+    bnss: ["393(3)"]
+    relationship: one_to_one
+    subject: "Special reasons for death sentence"
+    crpc_title: "Form and contents of judgment — special reasons for death"
+    bnss_title: "Form and contents of judgment — special reasons for death"
+    notes: "The 354(3) requirement for written 'special reasons' before death sentence is the procedural vehicle for the Bachan Singh / Machhi Singh 'rarest of rare' doctrine. BNSS 393(3) sub-section index pending verification."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "357"
+    bnss: ["395"]
+    relationship: one_to_one
+    subject: "Compensation order"
+    crpc_title: "Order to pay compensation"
+    bnss_title: "Order to pay compensation"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "366"
+    bnss: ["407"]
+    relationship: one_to_one
+    subject: "Sentence of death — submission to High Court"
+    crpc_title: "Sentence of death to be submitted by Court of Session for confirmation"
+    bnss_title: "Sentence of death to be submitted by Court of Session for confirmation"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # ---- Appeal chapter (372, 374, 378, 386, 389) --------------------------
+
+  - crpc: "372"
+    bnss: ["413"]
+    relationship: one_to_one
+    subject: "No appeal except as provided"
+    crpc_title: "No appeal to lie unless otherwise provided"
+    bnss_title: "No appeal to lie unless otherwise provided"
+    notes: "The general bar on appeal — including the 2008-amendment proviso giving victim a right of appeal."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "374"
+    bnss: ["415"]
+    relationship: one_to_one
+    subject: "Appeals from convictions"
+    crpc_title: "Appeals from convictions"
+    bnss_title: "Appeals from convictions"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "378"
+    bnss: ["419"]
+    relationship: one_to_one
+    subject: "Appeal in case of acquittal"
+    crpc_title: "Appeal in case of acquittal"
+    bnss_title: "Appeal in case of acquittal"
+    notes: "The 378 appeal-against-acquittal framework — one of the more procedural-discretion-heavy areas. BNSS 419 retains; verify whether the leave-of-court requirement structure is unchanged."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "386"
+    bnss: ["427"]
+    relationship: one_to_one
+    subject: "Powers of Appellate Court"
+    crpc_title: "Powers of the Appellate Court"
+    bnss_title: "Powers of the Appellate Court"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "389"
+    bnss: ["430"]
+    relationship: one_to_one
+    subject: "Suspension of sentence pending appeal"
+    crpc_title: "Suspension of sentence pending the appeal; release of appellant on bail"
+    bnss_title: "Suspension of sentence pending the appeal; release of appellant on bail"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # ---- Limitation, irregularity (468, 465) -------------------------------
+
+  - crpc: "465"
+    bnss: ["510"]
+    relationship: one_to_one
+    subject: "Effect of irregularity in procedure"
+    crpc_title: "Finding or sentence when reversible by reason of error, omission or irregularity"
+    bnss_title: "Finding or sentence when reversible by reason of error, omission or irregularity"
+    notes: null
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  - crpc: "468"
+    bnss: ["514"]
+    relationship: one_to_one
+    subject: "Limitation bar on cognizance"
+    crpc_title: "Bar to taking cognizance after lapse of period of limitation"
+    bnss_title: "Bar to taking cognizance after lapse of period of limitation"
+    notes: "The limitation grids (six months / one year / three years based on punishment) are sub-section-bearing — verify."
+    needs_verification: true
+    source: "MHA Table (recall)"
+
+  # =========================================================================
+  # NEW IN BNSS (no CrPC predecessor)
+  # =========================================================================
+
+  - crpc: null
+    bnss: ["356"]
+    relationship: new_in_bnss
+    subject: "Trial in absentia of proclaimed offender"
+    crpc_title: null
+    bnss_title: "Trial in absentia of proclaimed offender"
+    notes: "BNSS introduces a formal trial-in-absentia framework for proclaimed offenders (used in conjunction with BNSS 84 / CrPC 82 proclamation). No direct CrPC predecessor — CrPC required the accused's presence with limited exceptions. Sub-section index pending verification; this is a paper-worthy procedural innovation."
+    needs_verification: true
+    source: "PRS India note on trial-in-absentia provisions"
+
+  - crpc: null
+    bnss: ["530"]
+    relationship: new_in_bnss
+    subject: "Electronic mode for trial proceedings"
+    crpc_title: null
+    bnss_title: "Trial and proceedings to be held in electronic mode"
+    notes: "BNSS makes electronic / video-conferencing trial proceedings a default option (subject to court direction) rather than an exception. CrPC permitted electronic 313 examinations and witness depositions in limited circumstances; BNSS expands this. Sub-section index pending; section number 530 is recall-based."
+    needs_verification: true
+    source: "PRS India note (recall)"
