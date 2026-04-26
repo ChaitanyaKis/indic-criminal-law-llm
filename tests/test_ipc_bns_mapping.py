@@ -403,3 +403,72 @@ def test_batch2_kidnap_consolidation_rolls_up_to_bns_137():
         m = map_ipc_to_bns(ipc)
         assert m is not None
         assert m.relationship == "many_to_one", f"{ipc} rel={m.relationship}"
+
+
+# ---- Batch 4: abetment chapter + inventory-driven additions -----------
+
+
+def test_ipc_107_109_round_trip():
+    # IPC 107 (abetment def) → BNS 45; IPC 109 (general punishment) → BNS 49.
+    m107 = map_ipc_to_bns("107")
+    assert m107 is not None
+    assert m107.bns_sections == ["45"]
+    assert m107.relationship == "one_to_one"
+
+    m109 = map_ipc_to_bns("109")
+    assert m109 is not None
+    assert m109.bns_sections == ["49"]
+    assert m109.relationship == "one_to_one"
+
+    # Reverse direction must include both
+    assert any(e.ipc_section == "107" for e in map_bns_to_ipc("45"))
+    assert any(e.ipc_section == "109" for e in map_bns_to_ipc("49"))
+
+
+def test_abetment_chapter_completeness():
+    # All six abetment sections we mapped in Batch 4 must be present and
+    # carry a non-empty BNS target. Guards against partial-batch
+    # regressions where a chapter is half-mapped.
+    abetment_ipc = ("107", "108", "109", "110", "113", "114")
+    for ipc in abetment_ipc:
+        m = map_ipc_to_bns(ipc)
+        assert m is not None, f"IPC {ipc} (abetment) is missing from the mapping"
+        assert m.bns_sections, f"IPC {ipc} carries an empty BNS target"
+
+    # Schema-consistency: any abetment IPC section that lands on a BNS
+    # section also targeted by another mapped IPC section must be
+    # many_to_one. This catches the 113/114 case where both consolidate
+    # into BNS 53 — both must carry the consolidation marker.
+    bns_target_counts: dict[str, int] = {}
+    for ipc in abetment_ipc:
+        m = map_ipc_to_bns(ipc)
+        for s in m.bns_sections:
+            bns_target_counts[s] = bns_target_counts.get(s, 0) + 1
+
+    for ipc in abetment_ipc:
+        m = map_ipc_to_bns(ipc)
+        shared = any(bns_target_counts[s] > 1 for s in m.bns_sections)
+        if shared:
+            assert m.relationship == "many_to_one", (
+                f"IPC {ipc} shares a BNS target with another abetment "
+                f"section but is labelled {m.relationship!r}, not many_to_one"
+            )
+
+
+def test_ipc_148_completes_rioting_block():
+    # The public-order-with-weapons cluster spans two BNS sections:
+    #   IPC 144 (joining unlawful assembly armed) → BNS 189(*) (unlawful-assembly family)
+    #   IPC 146/147/148 (rioting def / punishment / armed)  → BNS 191(*) (rioting family)
+    # Test the literal claim — each section maps within its BNS family —
+    # rather than a homogenised "all in 191" framing that would be wrong
+    # for IPC 144 (which lives in BNS 189).
+    m144 = map_ipc_to_bns("144")
+    assert m144 is not None
+    assert any(s.startswith("189") for s in m144.bns_sections), m144.bns_sections
+
+    for ipc in ("146", "147", "148"):
+        m = map_ipc_to_bns(ipc)
+        assert m is not None, f"IPC {ipc} missing from the rioting block"
+        assert any(s.startswith("191") for s in m.bns_sections), (
+            f"IPC {ipc} → {m.bns_sections}, expected 191(...)"
+        )

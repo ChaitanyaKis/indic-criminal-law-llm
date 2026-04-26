@@ -1361,3 +1361,132 @@ mappings:
     bns_title: "Obscene acts and songs"
     notes: null
     source: "MHA Table"
+
+  # =========================================================================
+  # BATCH 4 — inventory-driven priorities at 1,349 docs (top-50 IPC) +
+  # principled completion of the abetment chapter (3/9 unmapped sections
+  # were 107/109/114, mapping the chapter as a unit makes more sense than
+  # piecemeal).
+  # =========================================================================
+
+  # ---- Abetment chapter (IPC 107-114 → BNS 45-53) -------------------------
+
+  - ipc: "107"
+    bns: ["45"]
+    relationship: one_to_one
+    subject: "Abetment of a thing"
+    ipc_title: "Abetment of a thing"
+    bns_title: "Abetment of a thing"
+    notes: "Definitional. BNS 45 retains the IPC 107 framework: abetment by instigation, conspiracy, or intentional aid. Critical for co-accused liability reasoning."
+    source: "Inventory-driven Batch 4 (top-50 priority); abetment chapter completion"
+
+  - ipc: "108"
+    bns: ["46"]
+    relationship: one_to_one
+    subject: "Abettor"
+    ipc_title: "Abettor"
+    bns_title: "Abettor"
+    notes: null
+    source: "Inventory-driven Batch 4 (top-50 priority); abetment chapter completion"
+
+  - ipc: "109"
+    bns: ["49"]
+    relationship: one_to_one
+    subject: "Punishment of abetment if act abetted committed"
+    ipc_title: "Punishment of abetment if the act abetted is committed in consequence and where no express provision is made for its punishment"
+    bns_title: "Punishment of abetment if act abetted is committed in consequence and where no express provision is made for its punishment"
+    notes: "The general abetment-punishment provision. Charged together with the principal offence (e.g., 302/109 = murder/abetment). High-frequency in conspiracy and joint-accused indictments — appears in roughly 1 of every 50 SC criminal judgments in the current corpus."
+    source: "Inventory-driven Batch 4 (top-50 priority); abetment chapter completion"
+
+  - ipc: "110"
+    bns: ["50"]
+    relationship: one_to_one
+    subject: "Abetment with different intention"
+    ipc_title: "Punishment of abetment if person abetted does act with different intention from that of abettor"
+    bns_title: "Punishment of abetment if person abetted does act with different intention from that of abettor"
+    notes: null
+    source: "Inventory-driven Batch 4 (top-50 priority); abetment chapter completion"
+
+  - ipc: "113"
+    bns: ["53"]
+    relationship: many_to_one
+    subject: "Abettor's liability for unintended effect"
+    ipc_title: "Liability of abettor for an effect caused by the act abetted different from that intended by the abettor"
+    bns_title: "Liability of abettor for an effect caused by the act abetted different from that intended by the abettor / Abettor present when offence is committed"
+    notes: "BNS 53 appears to consolidate the IPC 113 (unintended-effect liability) and IPC 114 (abettor present at offence) provisions. Sub-section split between 113 and 114 within BNS 53 needs Gazette verification. Consolidated with IPC 114 into BNS 53. The exact sub-section split within BNS 53 (effect-different limb vs abettor-present limb) is the verification question."
+    needs_verification: true
+    source: "Inventory-driven Batch 4 (top-50 priority); abetment chapter completion"
+
+  - ipc: "114"
+    bns: ["53"]
+    relationship: many_to_one
+    subject: "Abettor present at offence"
+    ipc_title: "Abettor present when offence is committed"
+    bns_title: "Liability of abettor for an effect caused by the act abetted different from that intended by the abettor / Abettor present when offence is committed"
+    notes: "Consolidated with IPC 113 into BNS 53. Verification of sub-section split pending Gazette text."
+    needs_verification: true
+    source: "Inventory-driven Batch 4 (top-50 priority); abetment chapter completion"
+
+  # ---- Property / mischief / commercial fraud -----------------------------
+
+  - ipc: "411"
+    bns: ["317(2)"]
+    relationship: one_to_one
+    subject: "Receiving stolen property"
+    ipc_title: "Dishonestly receiving stolen property"
+    bns_title: "Stolen property"
+    notes: "BNS 317 covers stolen-property offences with sub-sections; 317(2) carries the receiving-stolen-property limb. Sub-section index pending Gazette verification."
+    needs_verification: true
+    source: "Inventory-driven Batch 4 (top-50 priority)"
+
+  - ipc: "427"
+    bns: ["324(4)"]
+    relationship: one_to_one
+    subject: "Mischief causing damage"
+    ipc_title: "Mischief causing damage to amount of fifty rupees"
+    bns_title: "Mischief"
+    notes: "BNS retains the threshold structure but updates monetary amounts; verify exact sub-section. BNS 324 consolidates the IPC mischief chapter (425-440)."
+    needs_verification: true
+    source: "Inventory-driven Batch 4 (top-50 priority)"
+
+  - ipc: "452"
+    bns: ["333"]
+    relationship: one_to_one
+    subject: "House-trespass after preparation for hurt or assault"
+    ipc_title: "House-trespass after preparation for hurt, assault or wrongful restraint"
+    bns_title: "House-trespass after preparation for hurt, assault or wrongful restraint"
+    notes: null
+    needs_verification: true
+    source: "Inventory-driven Batch 4 (top-50 priority)"
+
+  - ipc: "477A"
+    bns: ["344"]
+    relationship: one_to_one
+    subject: "Falsification of accounts"
+    ipc_title: "Falsification of accounts"
+    bns_title: "Falsification of accounts"
+    notes: "Common in white-collar / corporate-fraud prosecutions. Re-enacted at main-section level."
+    source: "Inventory-driven Batch 4 (top-50 priority)"
+
+  # ---- Public order: armed rioting (completes the 144/146/147 cluster) ----
+
+  - ipc: "148"
+    bns: ["191(3)"]
+    relationship: one_to_one
+    subject: "Rioting armed with deadly weapon"
+    ipc_title: "Rioting, armed with deadly weapon"
+    bns_title: "Rioting"
+    notes: "Pairs with already-mapped 146 (rioting definition) and 147 (rioting punishment). BNS 191 consolidates rioting with sub-sections (1)/(2)/(3) for definition / punishment / armed-with-deadly-weapon respectively. Note: IPC 144 (unlawful assembly armed) maps to BNS 189(4) — different chapter, the unlawful-assembly family at BNS 189 is distinct from the rioting family at BNS 191. Sub-section precision for 191(3) pending Gazette verification."
+    needs_verification: true
+    source: "Inventory-driven Batch 4 (top-50 priority)"
+
+  # ---- Negligence (driving) ----------------------------------------------
+
+  - ipc: "279"
+    bns: ["281"]
+    relationship: one_to_one
+    subject: "Rash driving on public way"
+    ipc_title: "Rash driving or riding on a public way"
+    bns_title: "Rash driving or riding on a public way"
+    notes: "BNS 281 retains the IPC 279 framework. Common in negligent-death and hit-and-run cases (often charged together with 304A/Sec 106 BNS for death-causing rash driving)."
+    source: "Inventory-driven Batch 4 (top-50 priority)"

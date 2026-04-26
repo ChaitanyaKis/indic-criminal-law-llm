@@ -135,6 +135,42 @@ problem.
 Verification status: Inferred from public legal commentary; awaits
 post-enactment case law.
 
+## 7. Abetment chapter consolidation (IPC 107-120 → BNS 45-62)
+
+The IPC's abetment chapter (sections 107-120) is the foundational
+machinery for **all** co-accused criminal liability in Indian law
+beyond the two narrow doctrines of common intention (IPC 34 → BNS
+3(5)) and common object in unlawful assembly (IPC 149 → BNS 190).
+"302/109 IPC" — murder read with the general abetment-punishment
+section — is one of the most common compound charges in Indian
+criminal practice; in the current 1,349-doc Supreme Court corpus
+the inventory shows IPC 109 cited 26 times (rank 30 overall, top-10
+among purely procedural/general-principles sections).
+
+BNS 45-62 appears to consolidate the chapter with structurally
+similar provisions: BNS 45 (abetment definition, IPC 107), BNS 46
+(abettor, IPC 108), BNS 49 (general punishment, IPC 109), BNS 50
+(abetment with different intention, IPC 110), and BNS 53 — which
+appears to merge IPC 113 ("effect different from intended") and IPC
+114 ("abettor present at offence") into a single section. The exact
+sub-section split within BNS 53 is the open question: do the two
+limbs remain analytically distinct (sub-sections 53(1) / 53(2)) or
+have they been doctrinally collapsed? The mapping marks both 113
+and 114 as ``needs_verification: true`` until the enacted Gazette
+text resolves this.
+
+The NLP implication is one of the largest-volume mapping shifts in
+the entire IPC→BNS transition. Every pre-2024 charge-sheet that
+reads "Section X / 109 IPC" (X being any substantive offence) must
+re-render as "Section X' / 49 BNS" for any post-July-2024 fact
+pattern, where X' is the substantive offence's BNS analogue. A model
+that fails this composition silently drops co-accused liability in
+post-BNS reasoning — an error whose downstream impact runs through
+practically every multi-accused criminal case the model encounters.
+
+Verification status: Inferred from MHA Comparative Table; sub-section
+precision pending Gazette check.
+
 ---
 
 ## Next additions to this notebook (not yet written)
