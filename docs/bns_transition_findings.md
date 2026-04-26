@@ -171,6 +171,41 @@ practically every multi-accused criminal case the model encounters.
 Verification status: Inferred from MHA Comparative Table; sub-section
 precision pending Gazette check.
 
+## 8. Empirical: BNS has not yet reached the Supreme Court (April 2026)
+
+A 1,579-judgment audit of the SC criminal docket from 2015–2024,
+performed ten months after the BNS's July 1, 2024 effective date,
+finds that BNS jurisprudence has effectively not yet reached the
+Supreme Court of India. Across the entire corpus there are zero
+BNS-only judgments and exactly two transition cases (judgments
+citing both IPC and BNS) — both from 2024. The remaining 1,215
+substantive judgments cite only the IPC, and 362 procedural /
+constitutional matters cite neither code. The two "Both" cases
+represent the entire BNS-aware SC reasoning surface as of April
+2026.
+
+This is mechanically expected — the standard FIR-to-SC pipeline
+takes 2–5 years, so BNS-charged matters cannot have completed
+appellate review yet — but the implication for legal NLP is the
+opposite of the typical product narrative. Every Indian-criminal-law
+model trained or fine-tuned on SC judgments through 2024 is, today,
+empirically a tool for IPC jurisprudence regardless of stated BNS
+support. The IPC↔BNS mapping work in this project (149 entries
+across four batches) functions as scaffolding for the wave that
+hasn't yet arrived; it is not currently retrieval-augmentation
+surface for an existing BNS docket.
+
+The full empirical write-up — methodology, year-by-year breakdown,
+limitations, predictions for the next snapshot, and project
+implications — lives in
+[`docs/findings/2026-04-26_bns_at_sc_empirical.md`](findings/2026-04-26_bns_at_sc_empirical.md).
+Re-runs in October 2026 and April 2027 are scheduled to track the
+adoption curve as 2025-vintage prosecutions reach the SC bench.
+
+Verification status: Direct empirical observation from the project's
+own corpus inventory. Numbers reproducible via
+`python scripts/inventory_corpus.py`.
+
 ---
 
 ## Next additions to this notebook (not yet written)
