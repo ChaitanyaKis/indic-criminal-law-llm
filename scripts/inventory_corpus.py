@@ -309,7 +309,7 @@ def build_inventory(  # noqa: PLR0915 — top-level orchestration, fine
 
     # ---- Statute mapping coverage -------------------------------------
 
-    top_ipc = ipc_counter.most_common(30)
+    top_ipc = ipc_counter.most_common(50)
     top_ipc_sections = [s for s, _ in top_ipc]
     mapped_ipc: set[str] = set()
     mapping_error: str | None = None
@@ -435,10 +435,10 @@ def build_inventory(  # noqa: PLR0915 — top-level orchestration, fine
         # Surface the unmapped top IPC sections as a flag so mapping-expansion
         # work can be prioritised.
         flags.append(
-            f"{len(top_ipc_unmapped)} of the top-30 cited IPC sections are NOT "
+            f"{len(top_ipc_unmapped)} of the top-50 cited IPC sections are NOT "
             "in the IPC↔BNS mapping yet: "
-            + ", ".join(top_ipc_unmapped[:12])
-            + (", ..." if len(top_ipc_unmapped) > 12 else "")
+            + ", ".join(top_ipc_unmapped[:15])
+            + (", ..." if len(top_ipc_unmapped) > 15 else "")
         )
 
     # ---- Assemble JSON -----------------------------------------------
@@ -584,22 +584,39 @@ def print_summary(inv: dict[str, Any]) -> None:
     for row in st["top_acts"][:10]:
         print(f"  {row['act']:<28} {row['count']:>6,}")
     print()
-    print("--- Top 10 IPC sections cited ---")
+    print("--- Top 50 IPC sections cited (top 30 detailed, 31-50 compact) ---")
     mapped = set()
     try:
         from src.mapping.ipc_bns import load_mapping
         mapped = {e.ipc_section for e in load_mapping().entries if e.ipc_section}
     except Exception:  # noqa: BLE001
         pass
-    for row in st["top_ipc"][:10]:
+    for i, row in enumerate(st["top_ipc"][:30], 1):
         flag = "✓" if row["section"] in mapped else "✗"
-        print(f"  {flag} IPC {row['section']:<6}  {row['count']:>6,}")
+        print(f"  {i:>2}. {flag} IPC {row['section']:<8}  {row['count']:>6,}")
+    tail = st["top_ipc"][30:50]
+    if tail:
+        print(f"  31-50 (compact):")
+        compact = []
+        for row in tail:
+            flag = "✓" if row["section"] in mapped else "✗"
+            compact.append(f"{flag} {row['section']}({row['count']})")
+        # Wrap at ~80 chars
+        line = "    "
+        for token in compact:
+            if len(line) + len(token) + 2 > 88:
+                print(line.rstrip())
+                line = "    " + token + ", "
+            else:
+                line += token + ", "
+        if line.strip():
+            print(line.rstrip(", "))
     unmapped_top = st["mapping_coverage"]["top_ipc_missing_from_mapping"]
-    print(f"  mapping coverage of top 30: "
-          f"{st['mapping_coverage']['top_ipc_in_mapping_count']}/30")
+    print(f"  mapping coverage of top 50: "
+          f"{st['mapping_coverage']['top_ipc_in_mapping_count']}/50")
     if unmapped_top:
-        print(f"  top unmapped: {', '.join(unmapped_top[:8])}"
-              f"{', ...' if len(unmapped_top) > 8 else ''}")
+        print(f"  unmapped: {', '.join(unmapped_top[:15])}"
+              f"{', ...' if len(unmapped_top) > 15 else ''}")
     print()
     print("--- Citation network ---")
     print(f"  avg cases cited per doc:       {cn['avg_cases_cited_per_doc']}")
