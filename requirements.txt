@@ -1,3 +1,12 @@
+# NOTE: torch must be installed with CUDA support, not from the
+# default pip index. After cloning, run:
+#   pip uninstall -y torch torchvision torchaudio
+#   pip install torch torchvision torchaudio \
+#     --index-url https://download.pytorch.org/whl/cu124
+# CPU-only fallback works but is ~30-100x slower for embeddings.
+# Verified working on RTX 2060 (driver 595.97) with cu124 wheel:
+# torch 2.6.0+cu124, ~298 embeddings/sec on GPU vs ~3/sec on CPU.
+
 python-dotenv>=1.0.1
 requests>=2.32.3
 beautifulsoup4>=4.12.3
