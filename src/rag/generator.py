@@ -108,18 +108,27 @@ def _build_user_prompt(question: str, retrieved) -> str:
 # ---- Provider adapters -------------------------------------------------
 
 
-def _call_gemini(system: str, user: str, model: str, temperature: float) -> tuple[str, int | None, int | None]:
+def _call_gemini(
+    system: str, user: str, model: str, temperature: float, max_output_tokens: int,
+) -> tuple[str, int | None, int | None]:
     from google import genai
     from google.genai import types
 
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    # Gemini 2.5 family runs an internal "thinking" pass whose tokens
+    # count against max_output_tokens. With thinking on, a 1024-token
+    # budget routinely yields ~40 visible tokens (the rest is thinking).
+    # We disable it (thinking_budget=0) so the entire budget goes to
+    # the visible response — RAG answers don't benefit from internal
+    # reasoning since the retrieval already does the heavy lifting.
     response = client.models.generate_content(
         model=model,
         contents=user,
         config=types.GenerateContentConfig(
             system_instruction=system,
             temperature=temperature,
-            max_output_tokens=2048,
+            max_output_tokens=max_output_tokens,
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
         ),
     )
     text = response.text or ""
@@ -131,7 +140,9 @@ def _call_gemini(system: str, user: str, model: str, temperature: float) -> tupl
     return text, prompt_t, completion_t
 
 
-def _call_groq(system: str, user: str, model: str, temperature: float) -> tuple[str, int | None, int | None]:
+def _call_groq(
+    system: str, user: str, model: str, temperature: float, max_output_tokens: int,
+) -> tuple[str, int | None, int | None]:
     from groq import Groq
 
     client = Groq(api_key=os.environ["GROQ_API_KEY"])
@@ -140,20 +151,22 @@ def _call_groq(system: str, user: str, model: str, temperature: float) -> tuple[
         messages=[{"role": "system", "content": system},
                   {"role": "user", "content": user}],
         temperature=temperature,
-        max_tokens=2048,
+        max_tokens=max_output_tokens,
     )
     text = resp.choices[0].message.content or ""
     usage = resp.usage
     return text, getattr(usage, "prompt_tokens", None), getattr(usage, "completion_tokens", None)
 
 
-def _call_claude(system: str, user: str, model: str, temperature: float) -> tuple[str, int | None, int | None]:
+def _call_claude(
+    system: str, user: str, model: str, temperature: float, max_output_tokens: int,
+) -> tuple[str, int | None, int | None]:
     import anthropic
 
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
     resp = client.messages.create(
         model=model,
-        max_tokens=2048,
+        max_tokens=max_output_tokens,
         temperature=temperature,
         system=system,
         messages=[{"role": "user", "content": user}],
@@ -238,6 +251,7 @@ class RAGGenerator:
         question: str,
         retrieved_chunks,
         temperature: float = 0.2,
+        max_output_tokens: int = 1024,
     ) -> GenerationResult:
         if not retrieved_chunks:
             return GenerationResult(
@@ -256,6 +270,7 @@ class RAGGenerator:
         caller = _PROVIDERS[self.provider]
         text, pt, ct = _call_with_retry(
             caller, _SYSTEM_PROMPT, user, self.model, temperature,
+            max_output_tokens,
         )
 
         # Light post-processing: derive the structured citation list by
