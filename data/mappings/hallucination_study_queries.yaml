@@ -1,0 +1,39 @@
+# Hallucination Study v1 — query set (locked 2026-04-29 before any runs)
+#
+# Stratification: 3 substantive + 3 procedural + 2 edge-case +
+# 2 BNS-transition. See docs/findings/2026-04-29_hallucination_study_v1_design.md
+# for selection rationale.
+
+version: 1
+locked_date: "2026-04-29"
+queries:
+  - id: Q1
+    category: substantive
+    text: "What is the procedure for default bail under Section 167(2) CrPC?"
+  - id: Q2
+    category: substantive
+    text: "What is anticipatory bail under Section 438?"
+  - id: Q3
+    category: substantive
+    text: "What did the Supreme Court hold about Section 498A IPC and arrest of relatives?"
+  - id: Q4
+    category: procedural
+    text: "When can a Magistrate order further investigation under Section 173(8) CrPC?"
+  - id: Q5
+    category: procedural
+    text: "What is the inherent power of the High Court under Section 482 CrPC?"
+  - id: Q6
+    category: procedural
+    text: "When is sanction required under Section 197 CrPC for prosecuting a public servant?"
+  - id: Q7
+    category: edge_case
+    text: "What are the bail conditions under UAPA?"
+  - id: Q8
+    category: edge_case
+    text: "How should hostile witness testimony be appreciated?"
+  - id: Q9
+    category: bns_transition
+    text: "Has the Supreme Court ruled on any Bharatiya Nyaya Sanhita cases?"
+  - id: Q10
+    category: bns_transition
+    text: "How does BNS Section 103 differ from IPC 302?"
