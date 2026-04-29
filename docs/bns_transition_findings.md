@@ -322,6 +322,122 @@ crpc_section / bnss_sections fields) preserves the disambiguation;
 free-text retrieval over corpus that conflates "Section 482" citations
 will not.
 
+## 10. Gemini 2.5 Flash burns 95% of max_output_tokens on hidden reasoning by default
+
+A debugging discovery from the April 28 RAG validation: Gemini 2.5
+Flash's default behavior includes "thinking" — internal reasoning
+tokens that count against user-set ``max_output_tokens`` but never
+appear in the visible response. With ``max_output_tokens=1024`` (a
+common default), the model spent 980 tokens on hidden reasoning and
+produced only ~44 visible tokens.
+
+For RAG systems, this is silently catastrophic. The retrieval step
+already does the heavy reasoning work — the model's job is to
+synthesize retrieved chunks into a grounded answer, which doesn't
+benefit from extensive chain-of-thought. With thinking enabled, the
+model truncates its actual answer mid-sentence to fit within the
+remaining budget.
+
+Practitioner implication: any RAG pipeline using Gemini 2.5 Flash or
+Pro should explicitly disable thinking via:
+
+```python
+GenerationConfig(thinking_config=ThinkingConfig(thinking_budget=0))
+```
+
+Without this, ``max_output_tokens=1024`` becomes effectively
+``max_output_tokens≈40-100``. We discovered this only because a
+landmark legal question (CrPC 167(2) default bail) produced a partial
+answer that ended mid-sentence; with retrieval working correctly and
+the canonical cases surfaced (Ritu Chhabaria 2023, M Ravindran 2020,
+Satender Kumar Antil 2022), the truncation was clearly a
+generation-side bug, not a retrieval problem. A practitioner
+debugging the same RAG would likely misdiagnose as model
+hallucination, prompt-template problems, or insufficient retrieval.
+
+NLP reproducibility implication: published RAG benchmarks using
+Gemini 2.5 may be silently underreporting answer quality when the
+default thinking budget collides with typical ``max_output_tokens``
+settings. Worth a footnote in the paper's "experimental setup"
+section.
+
+Verification status: Direct empirical observation — a single API
+call with ``max_output_tokens=1024`` on a legal-procedural question
+returned ``thoughts_token_count=980, candidates_token_count=40,
+finish_reason=MAX_TOKENS``. Reproducible by anyone with a Gemini
+API key.
+
+## 11. Citation verifier was silently buggy; LLM hallucination rate is measurable
+
+A discovery from the April 28 commit cycle that almost slipped past:
+
+The project's headline differentiator from other legal AI tools is
+citation verification — the claim that we catch hallucinated case
+citations rather than letting them through. This claim was not
+actually being tested.
+
+Three layers of the issue:
+
+(1) The citation verifier's regex extracted only the first doc_id per
+bracketed citation group. When Gemini emitted multi-id brackets like
+``[doc_id: REAL, doc_id: HALLUCINATED]``, the verifier saw only
+``REAL`` and reported the citation as valid. The hallucination was
+silently swallowed.
+
+(2) The end-to-end test asserting "all citations valid" was passing
+because of (1) — not because Gemini wasn't hallucinating, but because
+the verifier was failing to detect when it did.
+
+(3) The fix to (1) immediately broke (2). The fixed verifier
+correctly identified that Gemini's response on a known legal query
+contained a hallucinated doc_id (``"4"`` — clearly fabricated, not a
+real Indian Kanoon document ID). The "test failure" was the verifier
+finally doing its job.
+
+What this means empirically:
+
+Gemini 2.5 Flash hallucinates legal case citations at a non-zero rate
+even when retrieval is providing high-quality grounded context. We
+have not yet measured the rate precisely, but the discovery occurred
+on a routine validation query — suggesting hallucination probability
+is not negligible (estimate: low single-digit percent per RAG turn,
+possibly higher).
+
+Implications for the paper:
+
+(a) "Citation verification catches real hallucinations" is now a
+demonstrated claim, not a theoretical one. We have a worked example.
+
+(b) The hallucination rate of frontier RAG-grounded LLMs on legal
+queries is itself a measurable quantity worth reporting in
+CrimBench-IN. Run the same eval against (i) raw Gemini, (ii) Gemini
++ retrieval but no citation verification, (iii) Gemini + retrieval +
+verification. Quantify how many hallucinations each configuration
+would have shipped to the user.
+
+(c) The previously-passing
+``test_end_to_end_rag_with_known_answer`` test in
+``tests/test_rag.py`` was a false-positive — asserting correctness
+via a buggy verifier. Lesson for legal NLP CI: contract tests should
+test our code, not the LLM's behaviour.
+
+First empirical data point (April 28, 2026): smoke test on the
+question "What is anticipatory bail under Section 438?" — Gemini 2.5
+Flash with thinking disabled, BGE-M3 retrieval over the 56,603-chunk
+full corpus, top-k=10. Gemini cited 3 doc_ids: 2 valid (in retrieved
+chunks), 1 fabricated (doc_id 40496296, not present in retrieval set
+or anywhere in the corpus). Hallucination rate on this single
+observation: 33%. The fabricated doc_id has the same syntactic shape
+as Indian Kanoon's real IDs, making it indistinguishable from a
+valid citation without programmatic verification. A practitioner
+relying on the LLM's apparent authority would have followed the fake
+reference.
+
+Verification status: Directly observed. Reproducible by running
+``scripts/ask.py`` against the legal corpus and inspecting the
+verifier's structured output for the gap between ``cited_count`` and
+the count of doc_ids in the LLM's response.
+
 ---
 
 ## Next additions to this notebook (not yet written)

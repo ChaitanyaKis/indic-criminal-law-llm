@@ -16,25 +16,37 @@ from __future__ import annotations
 import re
 from typing import Any
 
-# Matches:  [doc_id: 12345]   or   [doc_id: 12345, short excerpt...]
-# also tolerates "doc_id=12345" and plain bracket form, case-insensitive.
-_CITATION_PATTERN = re.compile(
-    r"\[\s*doc_id\s*[:=]\s*([A-Za-z0-9_\-]+)",
+# Two-stage extraction so multiple doc_ids inside one bracket all get
+# captured. Single-stage `\[\s*doc_id...` only matched the FIRST id
+# inside `[doc_id: A, doc_id: B]`, silently undercounting valid
+# citations and (worse) missing hallucinated ids in mixed brackets like
+# `[doc_id: REAL, doc_id: FAKE]` — exactly the failure mode this
+# module exists to catch.
+_BRACKET_PATTERN = re.compile(r"\[([^\]]*)\]")
+_INNER_DOC_ID = re.compile(
+    r"doc_id\s*[:=]\s*([A-Za-z0-9_\-]+)",
     flags=re.IGNORECASE,
 )
 
 
 def extract_citations(answer: str) -> list[str]:
     """Return the list of doc_ids referenced in the answer, in order of
-    first appearance, deduplicated."""
+    first appearance, deduplicated.
+
+    Captures every ``doc_id: X`` inside any ``[...]`` group, so a single
+    bracket with multiple ids — ``[doc_id: A, doc_id: B, doc_id: C]``
+    — produces ``['A', 'B', 'C']``. Tolerates ``doc_id=X``, mixed case,
+    extra whitespace.
+    """
     seen: set[str] = set()
     out: list[str] = []
-    for m in _CITATION_PATTERN.finditer(answer or ""):
-        did = m.group(1)
-        if did in seen:
-            continue
-        seen.add(did)
-        out.append(did)
+    for bracket in _BRACKET_PATTERN.finditer(answer or ""):
+        for m in _INNER_DOC_ID.finditer(bracket.group(1)):
+            did = m.group(1)
+            if did in seen:
+                continue
+            seen.add(did)
+            out.append(did)
     return out
 
 

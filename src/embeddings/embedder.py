@@ -45,7 +45,7 @@ class Embedder:
                 )
         self.device = device
         self.model_name = model_name
-        self.batch_size = batch_size if batch_size is not None else (32 if device == "cuda" else 8)
+        self.batch_size = batch_size if batch_size is not None else (16 if device == "cuda" else 8)
         self._model = None  # lazy
 
     @property
