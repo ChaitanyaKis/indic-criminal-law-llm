@@ -421,17 +421,12 @@ would have shipped to the user.
 via a buggy verifier. Lesson for legal NLP CI: contract tests should
 test our code, not the LLM's behaviour.
 
-First empirical data point (April 28, 2026): smoke test on the
-question "What is anticipatory bail under Section 438?" — Gemini 2.5
-Flash with thinking disabled, BGE-M3 retrieval over the 56,603-chunk
-full corpus, top-k=10. Gemini cited 3 doc_ids: 2 valid (in retrieved
-chunks), 1 fabricated (doc_id 40496296, not present in retrieval set
-or anywhere in the corpus). Hallucination rate on this single
-observation: 33%. The fabricated doc_id has the same syntactic shape
-as Indian Kanoon's real IDs, making it indistinguishable from a
-valid citation without programmatic verification. A practitioner
-relying on the LLM's apparent authority would have followed the fake
-reference.
+Empirical evidence: see
+[`docs/findings/2026-04-28_hallucination_signal.md`](findings/2026-04-28_hallucination_signal.md)
+for a 5-run signal capture on the anticipatory bail query,
+documenting two distinct failure modes (stable fabrication and
+index-as-id collapse) at a combined hallucination rate of 50% of
+emitted citations.
 
 Verification status: Directly observed. Reproducible by running
 ``scripts/ask.py`` against the legal corpus and inspecting the
