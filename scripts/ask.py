@@ -59,6 +59,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="Require retrieved chunks to cite this act "
                         "(e.g. IPC, CrPC, NDPS Act).")
     p.add_argument("--temperature", type=float, default=0.2)
+    p.add_argument("--prompt-format", choices=["numbered", "id_only"],
+                   default="numbered",
+                   help="Retrieval-block format. 'numbered' uses '--- Chunk N ---' "
+                        "headers (default); 'id_only' uses just '[doc_id: X]' "
+                        "with no ordinal preamble — treatment arm for Mode-2 "
+                        "hallucination hypothesis.")
     p.add_argument("--qdrant-dir", type=Path, default=DEFAULT_QDRANT_DIR)
     p.add_argument("--verbose", action="store_true",
                    help="Print the full text of every retrieved chunk.")
@@ -103,7 +109,9 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     result = generator.answer(
-        args.question, chunks, temperature=args.temperature,
+        args.question, chunks,
+        temperature=args.temperature,
+        prompt_format=args.prompt_format,
     )
     verification = verify_citations(result.answer, chunks)
 

@@ -69,8 +69,26 @@ class GenerationResult:
         }
 
 
-def _format_chunks_for_prompt(retrieved) -> str:
-    """Flatten retrieved chunks into a prompt-ready context block."""
+PromptFormat = Literal["numbered", "id_only"]
+
+
+def _format_chunks_for_prompt(
+    retrieved, prompt_format: PromptFormat = "numbered",
+) -> str:
+    """Flatten retrieved chunks into a prompt-ready context block.
+
+    Two formats supported:
+
+    - ``"numbered"`` (default, current behaviour): each chunk is
+      preceded by ``--- Chunk N ---``. The chunk ordinal sits next to
+      the doc_id which can occasionally cause an attention-pattern
+      collapse where the model emits the chunk number as if it were a
+      doc_id (Mode 2 hallucination — see
+      ``docs/findings/2026-04-28_hallucination_signal.md``).
+    - ``"id_only"``: chunks are separated by a horizontal rule and
+      identified only by their doc_id. No ordinal numbering. Treatment
+      arm of the Mode 2 hypothesis test.
+    """
     lines: list[str] = []
     for i, c in enumerate(retrieved, 1):
         if hasattr(c, "doc_id"):
@@ -85,17 +103,27 @@ def _format_chunks_for_prompt(retrieved) -> str:
             score = c.get("score", 0.0)
         title = (meta or {}).get("title") or "(untitled)"
         year = (meta or {}).get("year") or "?"
-        lines.append(
-            f"--- Chunk {i} "
-            f"(doc_id: {did}, year: {year}, score: {score:.3f}) ---\n"
-            f"Title: {title}\n"
-            f"{text.strip()}"
-        )
-    return "\n\n".join(lines)
+        if prompt_format == "id_only":
+            lines.append(
+                f"[doc_id: {did}] (year: {year}, score: {score:.3f})\n"
+                f"Title: {title}\n"
+                f"{text.strip()}"
+            )
+        else:  # "numbered"
+            lines.append(
+                f"--- Chunk {i} "
+                f"(doc_id: {did}, year: {year}, score: {score:.3f}) ---\n"
+                f"Title: {title}\n"
+                f"{text.strip()}"
+            )
+    sep = "\n\n---\n\n" if prompt_format == "id_only" else "\n\n"
+    return sep.join(lines)
 
 
-def _build_user_prompt(question: str, retrieved) -> str:
-    ctx = _format_chunks_for_prompt(retrieved)
+def _build_user_prompt(
+    question: str, retrieved, prompt_format: PromptFormat = "numbered",
+) -> str:
+    ctx = _format_chunks_for_prompt(retrieved, prompt_format)
     return (
         f"RETRIEVED CHUNKS:\n\n{ctx}\n\n"
         f"QUESTION: {question}\n\n"
@@ -252,6 +280,7 @@ class RAGGenerator:
         retrieved_chunks,
         temperature: float = 0.2,
         max_output_tokens: int = 1024,
+        prompt_format: PromptFormat = "numbered",
     ) -> GenerationResult:
         if not retrieved_chunks:
             return GenerationResult(
@@ -266,7 +295,7 @@ class RAGGenerator:
                 completion_tokens=0,
             )
 
-        user = _build_user_prompt(question, retrieved_chunks)
+        user = _build_user_prompt(question, retrieved_chunks, prompt_format)
         caller = _PROVIDERS[self.provider]
         text, pt, ct = _call_with_retry(
             caller, _SYSTEM_PROMPT, user, self.model, temperature,
