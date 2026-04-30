@@ -58,10 +58,16 @@ kaggle.json
 # Data
 data/raw/
 data/cleaned/
-data/processed/
+data/processed/*
 *.jsonl
 *.parquet
 *.pkl
+
+# Training datasets are committed for reproducibility (small,
+# rule-based, version-controlled). Raw corpus and bulky derived
+# artifacts (model weights, embeddings, eval outputs) stay
+# ignored. Pattern matches v0.1, v0.2, etc.
+!data/processed/instruction_dataset_*.jsonl
 
 # Runtime state-file locks (filelock-managed, transient)
 data/raw/_state/*.lock

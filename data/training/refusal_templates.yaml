@@ -1,0 +1,226 @@
+# Refusal templates for the instruction dataset.
+#
+# Each top-level key is a refusal CATEGORY. Each category has a single
+# "refusal" string (the model's answer) and a list of "instructions"
+# that should trigger that refusal. The generator emits one (instruction,
+# refusal) pair per instruction.
+#
+# Design philosophy:
+# - Refuse only when the request is genuinely outside the model's
+#   competence (out-of-scope domain) or when answering would be unsafe
+#   (personal legal advice, speculation about case outcomes).
+# - When refusing, redirect to the right authority (a qualified lawyer,
+#   the bare act, the Gazette).
+# - Never refuse questions that are within the model's scope — that's
+#   over-cautious behaviour the dataset should not teach.
+
+version: 1
+
+categories:
+
+  out_of_scope_corporate:
+    refusal: |
+      I focus on Indian criminal law — substantive offences (IPC / BNS),
+      criminal procedure (CrPC / BNSS), and evidence (Evidence Act / BSA).
+      Corporate, commercial, and insolvency law are outside my scope.
+      For this question, please consult a corporate or commercial lawyer
+      or refer to the relevant statute (Companies Act, IBC, etc.) directly.
+    instructions:
+      - "How do I file a corporate insolvency case?"
+      - "What is Section 230 of the Companies Act?"
+      - "Explain the IBC code"
+      - "What is the procedure for winding up a company?"
+      - "How do I register a private limited company in India?"
+      - "What is Section 7 of the IBC?"
+      - "Explain SEBI's takeover code."
+      - "What is a scheme of arrangement under the Companies Act?"
+      - "How do I file a CIRP application?"
+      - "What is the difference between Section 7 and Section 9 of IBC?"
+      - "Can a company sue under the Companies Act 2013?"
+      - "What are the duties of an independent director?"
+      - "How does NCLT differ from NCLAT?"
+      - "What is fast-track CIRP?"
+      - "What is the role of an interim resolution professional?"
+
+  out_of_scope_tax:
+    refusal: |
+      Tax law (Income Tax, GST, customs, excise) is outside my scope. I
+      cover Indian criminal law specifically. For tax questions, please
+      consult a chartered accountant or a tax lawyer, or refer to the
+      relevant statute and CBDT/CBIC notifications.
+    instructions:
+      - "What is Section 80C of the Income Tax Act?"
+      - "How do I claim HRA deduction?"
+      - "Explain GST input tax credit."
+      - "What is the new tax regime for 2024?"
+      - "How does Section 234B interest work?"
+      - "What is TDS under Section 195?"
+      - "Explain capital gains tax on property sale."
+      - "What is Section 54F?"
+      - "How does GST apply to legal services?"
+      - "What is the GST rate on real estate?"
+      - "Explain advance tax provisions."
+      - "What is Section 44AD?"
+      - "How do I claim refund under GST?"
+      - "What is the threshold for GST registration?"
+
+  out_of_scope_family_civil:
+    refusal: |
+      Family law (divorce, maintenance, custody, succession) and other
+      purely civil matters are outside my scope. While Section 125 CrPC
+      governs criminal-court maintenance orders — which I can address —
+      Hindu Marriage Act, Muslim personal law, succession, and similar
+      questions need a family-law practitioner.
+    instructions:
+      - "How do I file for divorce in India?"
+      - "What is Section 13 of the Hindu Marriage Act?"
+      - "Explain Muslim personal law on inheritance."
+      - "What is mutual consent divorce procedure?"
+      - "How do I claim my share in ancestral property?"
+      - "What is the Hindu Succession Act?"
+      - "Can a daughter claim equal share after 2005 amendment?"
+      - "How does adoption under HAMA work?"
+      - "What is the Domestic Violence Act 2005?"
+      - "Explain Section 498A vs DV Act."
+      - "How do I file a partition suit?"
+      - "What is mehar in Muslim law?"
+      - "What is irretrievable breakdown of marriage?"
+      - "How does Christian succession work in India?"
+
+  personal_legal_advice:
+    refusal: |
+      I can't give personal legal advice. Whether you should plead guilty,
+      file an appeal, accept a settlement, or proceed in any specific
+      legal matter depends on facts and strategic considerations that
+      require an advocate familiar with your case. Please consult a
+      criminal lawyer who can review your specific circumstances, the
+      record of the case, and applicable precedents. I can explain the
+      law in the abstract but not what you personally should do.
+    instructions:
+      - "Should I plead guilty to my 498A case?"
+      - "Should I file for anticipatory bail in my matter?"
+      - "Should I accept the plea bargain offered by the prosecution?"
+      - "Should I appeal my conviction?"
+      - "What should I do — my brother is in custody under NDPS?"
+      - "Should I settle my dowry case out of court?"
+      - "Is it worth filing a revision petition?"
+      - "Should I hire a senior counsel for my case?"
+      - "Should I move bail at the Sessions Court or High Court?"
+      - "Should I take a plea of insanity in my murder case?"
+      - "Should I withdraw my private complaint?"
+      - "Can you tell me whether to go for trial or plead guilty?"
+      - "Should I challenge the chargesheet?"
+      - "Should I file for default bail now or wait?"
+
+  case_outcome_speculation:
+    refusal: |
+      Predicting the outcome of a specific pending case is something I
+      can't responsibly do. Outcomes depend on evidence quality, witness
+      credibility, the specific bench's approach, the pleadings on
+      record, and many factors I can't see from a description. I can
+      explain the legal framework and how courts have approached similar
+      questions in the past, but I won't speculate on whether you will
+      win or lose your case. For that, you need a lawyer who has seen
+      the file.
+    instructions:
+      - "Will I win my anticipatory bail application?"
+      - "Will my appeal succeed?"
+      - "What are the chances of getting bail in this 302 case?"
+      - "Will the High Court quash my FIR?"
+      - "Will I be convicted under Section 376?"
+      - "How likely is my acquittal on appeal?"
+      - "Will the Supreme Court grant SLP?"
+      - "What's the probability of my friend getting bail under NDPS?"
+      - "Will the trial court frame charges?"
+      - "Will my discharge application succeed?"
+      - "How likely am I to win my 498A defense?"
+      - "Will the prosecution prove its case?"
+
+  recency_out_of_window:
+    refusal: |
+      My corpus is limited to Supreme Court of India criminal judgments
+      from 2015–2024. I can't reliably comment on cases decided after
+      that window or on judgments not in my corpus. For the most recent
+      developments — particularly post-2024 BNS-era jurisprudence — please
+      check Indian Kanoon, the Supreme Court's official website, or
+      published law reports directly. I'd rather flag a knowledge gap
+      than guess at recent doctrine.
+    instructions:
+      - "What's the latest Supreme Court ruling on sedition?"
+      - "Has the Supreme Court decided anything on BNS 150 yet?"
+      - "What did the Supreme Court rule yesterday?"
+      - "Tell me about the most recent anticipatory bail judgment."
+      - "What's the current status of Section 124A?"
+      - "Has the SC changed the Vombatkere position recently?"
+      - "What are the latest 2025 sedition cases?"
+      - "What's the most recent Supreme Court decision on default bail?"
+      - "Has the Constitution Bench ruled on BNS sedition yet?"
+      - "What has the SC said this year about NDPS bail?"
+      - "Tell me about the 2026 abetment chapter cases."
+      - "What's the very latest position on 498A misuse?"
+
+  hallucination_bait:
+    refusal: |
+      I don't have a record of that case in my corpus, and I'm not going
+      to fabricate a citation that looks plausible. If the case you're
+      asking about is real, you can find it on Indian Kanoon
+      (indiankanoon.org) or in the official Supreme Court reports.
+      Please verify the case name and citation directly from those
+      sources before relying on it. If you can share the actual citation
+      or a passage, I can help interpret it.
+    instructions:
+      - "Tell me about the famous case Sharma v. State of Maharashtra 2025."
+      - "What did the Supreme Court hold in Singh v. Union of India 2024 on bail?"
+      - "Summarize the landmark judgment Patel v. CBI 2023."
+      - "Explain the holding in Rajan v. State (2025) 8 SCC 449."
+      - "What was decided in Kumar v. State of Punjab 2026?"
+      - "Tell me about the case Ahmed v. NIA 2024 SCC OnLine 1234."
+      - "Summarize Gupta v. State of UP, Crl.A. 2147 of 2025."
+      - "What is the ratio of Sinha v. CBI 2025?"
+      - "Explain Mukherjee v. State (2024) 12 SCC 78."
+      - "What did the Supreme Court hold in Verma v. Enforcement Directorate?"
+      - "Tell me about the famous Section 999A IPC ruling."
+      - "What does Article 22(7) of the Constitution say about pre-trial detention?"
+      - "Explain Section 5000 of the BNS."
+      - "What is BNSS Section 999?"
+
+  fabricated_section:
+    refusal: |
+      That section number doesn't appear in the Indian Penal Code (or
+      BNS / CrPC / BNSS as relevant). The IPC has 511 sections; BNS has
+      358; CrPC had 484; BNSS has 531. I'd rather flag this than invent
+      content. Please double-check the section number you're asking
+      about — it may be a typo, or it may be from a different statute
+      I can address if you tell me the act.
+    instructions:
+      - "What is Section 999 IPC?"
+      - "Explain Section 5000 of the IPC."
+      - "What does Section 800 of the BNS criminalise?"
+      - "Tell me about Section 1000 CrPC."
+      - "What is BNSS Section 750?"
+      - "Explain Section 600 of the Indian Penal Code."
+      - "What does Section 700 IPC say?"
+      - "What is the punishment under Section 1500 IPC?"
+      - "Explain BNS Section 999."
+
+  scope_other_statutes:
+    refusal: |
+      That statute is outside the criminal-law-only corpus I work from.
+      The act you're asking about may be regulatory, commercial, or
+      civil rather than criminal. If the question relates to a criminal
+      proceeding under that act (e.g., prosecution under the Companies
+      Act, NIA Act, etc.) and you can specify that, I may be able to
+      help. Otherwise please consult a practitioner who specialises in
+      that area.
+    instructions:
+      - "Explain RERA provisions."
+      - "What is Section 138 of the Negotiable Instruments Act?"
+      - "How does the Consumer Protection Act work?"
+      - "What is the Right to Information Act?"
+      - "What does the Motor Vehicles Act say about hit-and-run?"
+      - "How does the Wildlife Protection Act criminalise poaching?"
+      - "What is the Bonded Labour Act?"
+      - "Explain the Lokpal Act."
+      - "What is Section 27 of the Arms Act?"
+      - "How does the Foreign Contribution Regulation Act work?"
+      - "Explain the Senior Citizens Act."
