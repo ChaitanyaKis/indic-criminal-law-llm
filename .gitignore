@@ -80,6 +80,10 @@ data/processed/_state/*.lock
 *.ckpt
 models/
 checkpoints/
+output/
+
+# Kaggle dataset upload staging — built by scripts/prepare_kaggle_dataset.py
+kaggle_upload/
 
 # Experiment tracking / logs
 wandb/
