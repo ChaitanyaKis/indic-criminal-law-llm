@@ -8,7 +8,7 @@ through the codebase.
 ## Reproducibility — Commit SHA
 
 The v1 production training run was launched against repository commit
-`<TO BE FILLED IN AFTER COMMIT>`.
+`eed53a6`.
 
 To reproduce: set `REPO_COMMIT` in
 [`notebooks/kaggle_train_qlora.ipynb`](../../notebooks/kaggle_train_qlora.ipynb)
